@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.zhongruan.book_management_system")
-public class Springboot2Application {
+public class SpringbootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Springboot2Application.class, args);
+        SpringApplication.run(SpringbootApplication.class, args);
     }
 
 }
