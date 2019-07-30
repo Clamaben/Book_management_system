@@ -8,10 +8,10 @@ spring:
       prefix:
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://localhost:3306/bms?serverTimezone=UTC
-    name: root
-    data-password: 123456
+    url: jdbc:mysql://localhost:3306/book_management?serverTimezone=UTC
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.zhongruan.springboot2.entity
+  type-aliases-package: com.zhongruan.book_management_system.entity

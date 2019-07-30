@@ -20,11 +20,11 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `id` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci NOT NULL,
-  `name` varchar(12) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `PASSWORD` varchar(25) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+                         `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                         `name` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                         `PASSWORD` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                         PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of admin
@@ -39,15 +39,15 @@ INSERT INTO `admin` VALUES ('6', 'test', '123456');
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
-  `id` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci NOT NULL,
-  `name` varchar(20) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `ISBN` varchar(25) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `type` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `description` varchar(150) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `img_url` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `status` char(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+                        `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                        `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                        `ISBN` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                        `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                        `description` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                        `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                        `status` varchar(1) NOT NULL,
+                        PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of book
@@ -70,13 +70,13 @@ INSERT INTO `book` VALUES ('9', '无规则游戏', 'ISBN9787213088308', 'fiction
 -- ----------------------------
 DROP TABLE IF EXISTS `borrower`;
 CREATE TABLE `borrower` (
-  `id` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci NOT NULL,
-  `name` varchar(12) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `PASSWORD` varchar(25) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `type` varchar(8) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `degree` varchar(6) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+                            `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                            `name` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                            `PASSWORD` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                            `type` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                            `degree` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                            PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of borrower
@@ -91,18 +91,18 @@ INSERT INTO `borrower` VALUES ('6', 'test', '123456', 'teacher', '');
 -- ----------------------------
 DROP TABLE IF EXISTS `borrowrecord`;
 CREATE TABLE `borrowrecord` (
-  `recordID` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci NOT NULL,
-  `borrowerID` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `bookID` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `borrowTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dueTime` timestamp NOT NULL,
-  `status` char(1) NOT NULL,
-  PRIMARY KEY (`recordID`) USING BTREE,
-  KEY `borrowerID` (`borrowerID`) USING BTREE,
-  KEY `bookID` (`bookID`) USING BTREE,
-  CONSTRAINT `borrowrecord_ibfk_1` FOREIGN KEY (`borrowerID`) REFERENCES `borrower` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `borrowrecord_ibfk_2` FOREIGN KEY (`bookID`) REFERENCES `book` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+                                `recordID` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                `borrowerID` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                `bookID` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                `borrowTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                `dueTime` varchar(20) NOT NULL,
+                                `status` varchar(1) NOT NULL,
+                                PRIMARY KEY (`recordID`) USING BTREE,
+                                KEY `borrowerID` (`borrowerID`) USING BTREE,
+                                KEY `bookID` (`bookID`) USING BTREE,
+                                CONSTRAINT `borrowrecord_ibfk_1` FOREIGN KEY (`borrowerID`) REFERENCES `borrower` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+                                CONSTRAINT `borrowrecord_ibfk_2` FOREIGN KEY (`bookID`) REFERENCES `book` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of borrowrecord
@@ -118,13 +118,13 @@ INSERT INTO `borrowrecord` VALUES ('5', '6', '10', '2018-12-20 18:01:31', '2018-
 -- ----------------------------
 DROP TABLE IF EXISTS `loginticket`;
 CREATE TABLE `loginticket` (
-  `ticket` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NOT NULL,
-  `userid` varchar(36) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT '',
-  `role` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT '',
-  `expired` date DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`ticket`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+                               `ticket` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                               `userid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+                               `role` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+                               `expired` date DEFAULT NULL,
+                               `status` tinyint(1) DEFAULT NULL,
+                               PRIMARY KEY (`ticket`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of loginticket
@@ -182,11 +182,11 @@ INSERT INTO `loginticket` VALUES ('fb939', '1', 'operator', '2018-12-21', '0');
 -- ----------------------------
 DROP TABLE IF EXISTS `operator`;
 CREATE TABLE `operator` (
-  `id` char(36) CHARACTER SET gbk COLLATE gbk_chinese_ci NOT NULL,
-  `name` varchar(12) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  `PASSWORD` varchar(25) CHARACTER SET gbk COLLATE gbk_chinese_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+                            `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                            `name` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                            `PASSWORD` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                            PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of operator

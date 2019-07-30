@@ -1,4 +1,4 @@
-package com.zhongruan.springboot2.entity;
+package com.zhongruan.book_management_system.entity;
 
 
 import java.util.Date;

@@ -1,7 +1,5 @@
-package com.zhongruan.springboot2.entity;
+package com.zhongruan.book_management_system.entity;
 
-
-import java.lang.reflect.Type;
 
 public class Book {
     private String id;
@@ -24,14 +22,14 @@ public class Book {
 
     }
 
-    public Book(String id, String name, String ISBN, String type, String descp, String img_url,String status) {
+    public Book(String id, String name, String ISBN, String type, String descp, String img_url, String status) {
         this.id = id;
         this.name = name;
         this.ISBN = ISBN;
         this.type = type;
         this.descp = descp;
         this.img_url = img_url;
-        this.status=status;
+        this.status = status;
     }
 
     public String getId() {

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhongruan.springboot2.dao.IUserDao">
+<mapper namespace="com.zhongruan.book_management_system.dao.IUserDao">
 
-
-    <select id="getAllUsers" resultType="com.zhongruan.springboot2.entity.User">
-        select * from borrower;
+    <select id="getAllUsers" resultType="com.zhongruan.book_management_system.entity.User">
+        select *
+        from borrower;
     </select>
-    <select id="FindUserByid" resultType="com.zhongruan.springboot2.entity.User">
-        select * from admin a,borrower b,operator o where a.id=#{id} or b.id=#{id} or o.id=#{id};
+    <select id="findUserByid" resultType="com.zhongruan.book_management_system.entity.User">
+        select *
+        from admin a,
+             borrower b,
+             operator o
+        where a.id = #{id}
+           or b.id = #{id}
+           or o.id = #{id};
     </select>
 </mapper>

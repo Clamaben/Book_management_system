@@ -1,5 +1,5 @@
-// 借阅者、图书管理员、系统管理员类的父类
-package com.zhongruan.springboot2.entity;
+// 锟斤拷锟斤拷锟竭★拷图锟斤拷锟斤拷锟皆憋拷锟较低筹拷锟斤拷锟皆憋拷锟侥革拷锟斤拷
+package com.zhongruan.book_management_system.entity;
 
 
 public class User {
