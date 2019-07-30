@@ -5,5 +5,6 @@ import com.zhongruan.springboot2.entity.User;
 import java.util.List;
 
 public interface IUserDao {
-    List<User> getUsers();
+    List<User> getAllUsers();
+    List<User> FindUserByid(int id);
 }

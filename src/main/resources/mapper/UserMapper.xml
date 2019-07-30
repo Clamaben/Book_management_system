@@ -3,7 +3,10 @@
 <mapper namespace="com.zhongruan.springboot2.dao.IUserDao">
 
 
-    <select id="getUsers" resultType="com.zhongruan.springboot2.entity.User">
-        select * from test;
+    <select id="getAllUsers" resultType="com.zhongruan.springboot2.entity.User">
+        select * from borrower;
+    </select>
+    <select id="FindUserByid" resultType="com.zhongruan.springboot2.entity.User">
+        select * from admin a,borrower b,operator o where a.id=#{id} or b.id=#{id} or o.id=#{id};
     </select>
 </mapper>
