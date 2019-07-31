@@ -19,6 +19,6 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public Book FindBookByid(Book book) {
-        return bookDao.findBookByid(Integer.parseInt(book.getId()));
+        return bookDao.findBookByid(book.getId());
     }
 }

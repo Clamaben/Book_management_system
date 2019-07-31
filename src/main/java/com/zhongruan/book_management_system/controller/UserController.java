@@ -28,28 +28,9 @@ public class UserController {
     //跳转登录界面
     @RequestMapping("toLogin")
     public String toLogin() {
-        return "Login";
+        return "login";
     }
 
-    //登录是否成功
-    @RequestMapping("Login")
-    public Map Login(User user, Model model, HttpServletRequest request) {
-        User db_user = userService.getUserByid(user);
-        Map map = new HashMap<>();
-        if (db_user.getName() != null) {
-            if (db_user.getPassword().equals(user.getPassword())) {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", db_user);
-                map.put("logincode", 1);
-                return map;
-            }
-        }
-        map.put("msg", "账号或者密码错误！");
-        map.put("user", user);
-        map.put("logincode", 0);
-        return map;
-    }
-    //
 
 
 }
