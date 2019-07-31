@@ -4,15 +4,16 @@
 
     <select id="getAllUsers" resultType="com.zhongruan.book_management_system.entity.User">
         select *
-        from borrower;
+        from user
     </select>
-    <select id="findUserByid" resultType="com.zhongruan.book_management_system.entity.User">
+    <select id="getByUsername" resultType="com.zhongruan.book_management_system.entity.User">
         select *
-        from admin a,
-             borrower b,
-             operator o
-        where a.id = #{id}
-           or b.id = #{id}
-           or o.id = #{id};
+        from user
+        where username = #{_parameter}
+    </select>
+    <select id="getUserById" resultType="com.zhongruan.book_management_system.entity.User">
+        select *
+        from user
+        where id = #{_parameter}
     </select>
 </mapper>

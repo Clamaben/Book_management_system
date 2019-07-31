@@ -4,47 +4,34 @@ package com.zhongruan.book_management_system.entity;
 import java.util.Date;
 
 public class BorrowRecord {
-    private String recordId;
-    private String borrowerId;
-    private String bookId;
+    private int recordId;
+    private int borrowerId;
+    private int bookId;
     private Date borrowTime;
     private Date dueTime;
-    private String status;
+    private int status;//0表示已归还，1表示未归还
 
-    public BorrowRecord() {
-
-    }
-
-    public BorrowRecord(String recordId, String borrowerId, String bookId, Date borrowTime, Date dueTime, String status) {
-        this.recordId = recordId;
-        this.borrowerId = borrowerId;
-        this.bookId = bookId;
-        this.borrowTime = borrowTime;
-        this.dueTime = dueTime;
-        this.status=status;
-    }
-
-    public String getRecordId() {
+    public int getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(String recordId) {
+    public void setRecordId(int recordId) {
         this.recordId = recordId;
     }
 
-    public String getBorrowerId() {
+    public int getBorrowerId() {
         return borrowerId;
     }
 
-    public void setBorrowerId(String corrowerId) {
-        this.borrowerId = corrowerId;
+    public void setBorrowerId(int borrowerId) {
+        this.borrowerId = borrowerId;
     }
 
-    public String getBookId() {
+    public int getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(int bookId) {
         this.bookId = bookId;
     }
 
@@ -56,7 +43,6 @@ public class BorrowRecord {
         this.borrowTime = borrowTime;
     }
 
-
     public Date getDueTime() {
         return dueTime;
     }
@@ -65,12 +51,11 @@ public class BorrowRecord {
         this.dueTime = dueTime;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
-
 }

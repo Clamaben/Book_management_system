@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IUserDao {
     List<User> getAllUsers();
-    List<User> findUserByid(int id);
+
+    User getUserById(int id);
+    User getByUsername(String username);
 }

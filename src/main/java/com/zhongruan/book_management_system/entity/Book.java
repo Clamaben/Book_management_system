@@ -2,44 +2,24 @@ package com.zhongruan.book_management_system.entity;
 
 
 public class Book {
-    private String id;
+    private int id;
     private String name;
     private String ISBN;
     private String type;
-    private String descp;
+    private String description;
     private String img_url;
     private String status;
+    private int stock;//总计库存（包括已借出）
+    private int onLoan;//已借出数量
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Book() {
-
-    }
-
-    public Book(String id, String name, String ISBN, String type, String descp, String img_url, String status) {
-        this.id = id;
-        this.name = name;
-        this.ISBN = ISBN;
-        this.type = type;
-        this.descp = descp;
-        this.img_url = img_url;
-        this.status = status;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -65,12 +45,12 @@ public class Book {
         this.type = type;
     }
 
-    public String getDescp() {
-        return descp;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescp(String descp) {
-        this.descp = descp;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImg_url() {
@@ -79,6 +59,29 @@ public class Book {
 
     public void setImg_url(String img_url) {
         this.img_url = img_url;
+    }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getOnLoan() {
+        return onLoan;
+    }
+
+    public void setOnLoan(int onLoan) {
+        this.onLoan = onLoan;
     }
 }
