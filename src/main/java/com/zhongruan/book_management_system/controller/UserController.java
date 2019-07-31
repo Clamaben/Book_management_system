@@ -31,6 +31,9 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping("toSetting")
+    public String toSetting(){return "admin-setting";}
+
 
 
 }
