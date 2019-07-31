@@ -35,10 +35,7 @@ public class UserServiceImpl implements IUserService {
             throw new UsernameNotFoundException("user not found");
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        String[] roles = myUser.getRole().split(",");
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-        }
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + myUser.getRole()));
         securityUser = new org.springframework.security.core.userdetails.User(myUser.getUsername(), myUser.getPassword(), authorities);
         return securityUser;
     }

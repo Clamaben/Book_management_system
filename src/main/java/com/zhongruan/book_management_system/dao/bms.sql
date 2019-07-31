@@ -208,8 +208,8 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user`
     DISABLE KEYS */;
 INSERT INTO `user`
-VALUES (1, 'test', '123456', 'ADMIN,BORROWER', 'BD'),
-       (2, 'TianaoGe', '123456', 'LIBRARIAN,BORROWER', NULL),
+VALUES (1, 'test', '123456', 'ADMIN', 'BD'),
+       (2, 'TianaoGe', '123456', 'LIBRARIAN', NULL),
        (3, 'ChaofanZhu', '123456', 'BORROWER', 'MD');
 /*!40000 ALTER TABLE `user`
     ENABLE KEYS */;

@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()//开启formLogin默认配置
                 .loginPage("/toLogin").permitAll()//请求时未登录跳转接口
-                .failureUrl("/toLoginsadf")//用户密码错误跳转接口
+                .failureUrl("/toLogin")//用户密码错误跳转接口
                 .defaultSuccessUrl("/toIndex", true)//登录成功之后的页面
                 .loginProcessingUrl("/login")//处理表单请求的url
                 .usernameParameter("username")//表单提交的参数

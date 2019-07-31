@@ -7,7 +7,7 @@ public class User {
     private String username;
     private String password;
     //角色分为 LIBRARIAN（图书管理员）,BORROWER（借阅者）,ADMIN（管理员），角色之间的权限互不相关
-    //多个角色之间用英文逗号','隔开
+    //每个用户只能拥有一个角色
     private String role;
     private String degree;
 
