@@ -9,4 +9,11 @@ public interface IUserDao {
 
     User getUserById(int id);
     User getByUsername(String username);
+    int add(User user);
+
+    int deleteById(Integer id);
+
+    int updateById(User user);
+
+    User queryById(User user);
 }
