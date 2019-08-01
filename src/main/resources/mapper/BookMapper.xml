@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhongruan.book_management_system.dao.IBookDao">
+    <update id="BorrowingBookByid">
+        update book
+        <set>
+            stock = stock-1
+        </set>
+        where
+        id=#{_parameter};
+    </update>
+    <update id="ReturningBookByid">
+        update book
+        <set>
+                stock = stock+1
+        </set>
+        where
+        id=#{_parameter};
+    </update>
 
 
     <select id="findBookByid" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
         from book
-        where id = #{id};
+        where id = #{_parameter};
     </select>
     <select id="getAllBooks" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
         from book;
+    </select>
+    <select id="findBookByname" resultType="com.zhongruan.book_management_system.entity.Book">
+        select *
+        from book
+        where name = "%"#{_parameter}"%"
     </select>
 </mapper>

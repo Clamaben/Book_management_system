@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface IBookService {
     List<Book> getAllBooks();
-    Book FindBookByid(Book book);
+    Book FindBookByid(int id);
+    List<Book> FindBooksByname(String name);
+    boolean BorrowingBookByid(int id);
+    boolean ReturningBookByid(int id);
 }
