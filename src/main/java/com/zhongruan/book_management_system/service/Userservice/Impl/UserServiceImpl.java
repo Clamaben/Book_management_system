@@ -28,6 +28,18 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public int add(User user) { return userDao.add(user); }
+
+    @Override
+    public int deleteById(Integer id) { return userDao.deleteById(id); }
+
+    @Override
+    public int updateById(User user) { return userDao.updateById(user); }
+
+    @Override
+    public User queryById(User user) { return userDao.queryById(user); }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         org.springframework.security.core.userdetails.User securityUser;
         User myUser = userDao.getByUsername(username);
