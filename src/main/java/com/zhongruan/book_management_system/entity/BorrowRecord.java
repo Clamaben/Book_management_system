@@ -8,7 +8,6 @@ public class BorrowRecord {
     private int borrowerId;
     private int bookId;
     private Date borrowTime;
-    private Date dueTime;
     private int status;//0表示已归还，1表示未归还
 
     public int getRecordId() {
@@ -41,14 +40,6 @@ public class BorrowRecord {
 
     public void setBorrowTime(Date borrowTime) {
         this.borrowTime = borrowTime;
-    }
-
-    public Date getDueTime() {
-        return dueTime;
-    }
-
-    public void setDueTime(Date dueTime) {
-        this.dueTime = dueTime;
     }
 
     public int getStatus() {

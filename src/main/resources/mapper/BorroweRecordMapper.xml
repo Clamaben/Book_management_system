@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhongruan.book_management_system.dao.IBorroweRecordDao">
+    <insert id="AddBorrowRecord">
+        insert into borrowerrecord
+        (borrowerId, bookId, status, borrowTime)
+        values (#{borrowerId},#{bookId},#{status},#{borrowTime});
+    </insert>
+    <update id="UpdateBorrowRecordStatus">
+        update borrowerrecord
+        <set>
+            status = 0
+        </set>
+        where id = #{recordId};
+    </update>
+
+    <select id="FindBorrowRecordByid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
+        select *
+        from borrowerrecord
+        where id = #{_parameter};
+    </select>
+    <select id="FindBorrowRecordByBorrowerid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
+        select *
+        from borrowerrecord
+        where borrowerId = #{_parameter};
+    </select>
+    <select id="FindBorrowRecordByBookid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
+        select *
+        from borrowerrecord
+        where bookId = #{_parameter};
+    </select>
+    <select id="FindBorrowRecordByBookidAndBorrowerid"
+            resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
+        select *
+        from borrowerrecord
+        where bookId = #{0} and borrowerId = #{1};
+    </select>
+</mapper>

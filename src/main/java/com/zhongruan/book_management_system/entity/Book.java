@@ -11,6 +11,7 @@ public class Book {
     private String status;
     private int stock;//总计库存（包括已借出）
     private int onLoan;//已借出数量
+    private String author;
 
 
     public int getId() {
@@ -83,5 +84,13 @@ public class Book {
 
     public void setOnLoan(int onLoan) {
         this.onLoan = onLoan;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -16,4 +16,10 @@ public interface IBookDao {
     boolean BorrowingBookByid(int id);
     //通过id归还一本书
     boolean ReturningBookByid(int id);
+    //添加一本书
+    boolean AddBook(Book book);
+    //通过id删除一本书
+    boolean DeleteBookByid(int id);
+    //修改一本书
+    boolean UpdataBook(Book book);
 }

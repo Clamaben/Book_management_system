@@ -37,4 +37,19 @@ public class BookServiceImpl implements IBookService {
         return bookDao.ReturningBookByid(id);
     }
 
+    @Override
+    public boolean AddBook(Book book) {
+        return bookDao.AddBook(book);
+    }
+
+    @Override
+    public boolean DeleteBookByid(int id) {
+        return bookDao.DeleteBookByid(id);
+    }
+
+    @Override
+    public boolean UpdataBook(Book book) {
+        return UpdataBook(book);
+    }
+
 }
