@@ -17,5 +17,8 @@ public class IndexController {
         return "admin-setting";
     }
 
-
+    @RequestMapping("toIndex")
+    public String toIndex() {
+        return "index";
+    }
 }
