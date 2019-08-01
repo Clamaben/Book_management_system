@@ -25,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()//配置权限
-                .antMatchers("*.css","static/*").permitAll()
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/librarian/*").hasRole("LIBRARIAN")
                 .antMatchers("/borrower/*").hasRole("BORROWER")
@@ -34,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()//开启formLogin默认配置
                 .loginPage("/toLogin").permitAll()//请求时未登录跳转接口
                 .failureUrl("/toLogin")//用户密码错误跳转接口
-                .defaultSuccessUrl("/toIndex", true)//登录成功之后的页面
+                .defaultSuccessUrl("/index", true)//登录成功之后的页面
+                .successHandler(new LoginSuccessHandler())//设置自定义处理规则，根据身份跳转到不同页面
                 .loginProcessingUrl("/login")//处理表单请求的url
                 .usernameParameter("username")//表单提交的参数
                 .passwordParameter("password")
@@ -55,9 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService);
     }
 
-    //@Override
-    //public void configure(WebSecurity web) {
-    //    //解决静态资源被SpringSecurity拦截的问题
-    //    web.ignoring().antMatchers("*.css", "static/*");
-    //}
+    @Override
+    public void configure(WebSecurity web) {
+        //解决静态资源被SpringSecurity拦截的问题
+        web.ignoring().antMatchers("/static/**");
+    }
 }
