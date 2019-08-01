@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -8,11 +9,10 @@
     <meta name="author" content="">
     <title>Signin Template for Bootstrap</title>
 
-        <link href="/people/signin.css" rel="stylesheet">
+        <link href="${root}/static/signin.css" rel="stylesheet">
 </head>
 
 <body class="text-center">
-<c:set var="root" value="${pageContext.request.contextPath}"/>
 <form class="form-signin" action="${root}/login" method="post">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="username" class="sr-only">Username</label>

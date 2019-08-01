@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -24,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()//配置权限
-                .antMatchers("*.css").permitAll()
+                .antMatchers("*.css","static/*").permitAll()
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/librarian/*").hasRole("LIBRARIAN")
                 .antMatchers("/borrower/*").hasRole("BORROWER")
@@ -48,8 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService);
     }
+
+    //@Override
+    //public void configure(WebSecurity web) {
+    //    //解决静态资源被SpringSecurity拦截的问题
+    //    web.ignoring().antMatchers("*.css", "static/*");
+    //}
 }
