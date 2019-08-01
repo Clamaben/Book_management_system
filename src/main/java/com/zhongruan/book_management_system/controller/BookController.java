@@ -58,35 +58,5 @@ public class BookController {
         map.put("code", 0);
         return map;
     }
-    //通过id借书
-    @RequestMapping("BorroweingBookByid")
-    public Map BorroweingBookByid (@RequestParam("id") int id) {
-        Map map = new HashMap<>();
-        Book book = bookService.FindBookByid(id);
-        if (book != null) {
-            if (book.getStock()!=0){
-                if(bookService.BorrowingBookByid(id)){
-                    map.put("code", 1);
-                    return map;
-                }
-            }
-        }
-        map.put("code", 0);
-        return map;
-    }
-    //通过id归还一本书
-    @RequestMapping("ReturningBookByid")
-    public Map ReturningBookByid (@RequestParam("id") int id) {
-        Map map = new HashMap<>();
-        Book book = bookService.FindBookByid(id);
-        if (book != null) {
-            if (bookService.ReturningBookByid(id)) {
-                map.put("code", 1);
-                return map;
-            }
-        }
-        map.put("code", 0);
-        return map;
-    }
 
 }
