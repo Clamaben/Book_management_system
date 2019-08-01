@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ public class BookController {
 
     //返回所有books
     @RequestMapping("getAllBooks")
+    @ResponseBody
     public Map getAllBooks() {
         Map map = new HashMap<>();
         List<Book> books = bookService.getAllBooks();
@@ -34,6 +36,7 @@ public class BookController {
     }
     //通过id查询一本书
     @RequestMapping("getBookByid")
+    @ResponseBody
     public Map getBookByid (@RequestParam("id") int id) {
         Map map = new HashMap<>();
         Book book = bookService.FindBookByid(id);
@@ -47,6 +50,7 @@ public class BookController {
     }
     //通过书名模糊查询返回书籍列表
     @RequestMapping("getBooksByname")
+    @ResponseBody
     public Map getBooksByname (@RequestParam("name") String name) {
         Map map = new HashMap<>();
         List<Book> books = bookService.FindBooksByname(name);
