@@ -23,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //测试的时候用这个
+        //http.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+        //实际运行的时候用这个
         http
                 .authorizeRequests()//配置权限
                 .antMatchers("/admin/*").hasRole("ADMIN")

@@ -50,7 +50,7 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public boolean UpdataBook(Book book) {
-        return UpdataBook(book);
+        return bookDao.UpdataBook(book);
     }
 
     @Override

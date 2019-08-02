@@ -62,51 +62,6 @@ public class BookController {
         map.put("code", 0);
         return map;
     }
-    //添加一本书,map中的code值集含义：1=添加成功；0=添加失败
-    @RequestMapping("AddBook")
-    @ResponseBody
-    public Map AddBook (Book Addbook) {
-        Map map = new HashMap<>();
-            if (bookService.AddBook(Addbook)){
-                map.put("code", 1);
-                return map;
-            }
-            map.put("code", 0);
-            return map;
-    }
-    //通过id删除一本书,map中的code值集含义：0=书籍不存在；1=删除成功；2=删除失败
-    @RequestMapping("DeleteBookByid")
-    @ResponseBody
-    public Map DeleteBookByid (@RequestParam("id") int id) {
-        Map map = new HashMap<>();
-    	Book book=bookService.FindBookByid(id);
-    	if (book.getName()!=null){
-    	    if (bookService.DeleteBookByid(id)){
-                map.put("code", 1);
-                return map;
-            }
-            map.put("code", 2);
-            return map;
-        }
-        map.put("code", 0);
-        return map;
-    }
-    //修改一本书,map中的code值集含义：0=书籍不存在；1=修改成功；2=修改失败
-    @RequestMapping("UpdataBook")
-    @ResponseBody
-    public Map UpdataBook (Book Updatabook) {
-        Map map = new HashMap<>();
-        Book book = bookService.FindBookByid(Updatabook.getId());
-        if (book.getName()!=null){
-            if (bookService.UpdataBook(Updatabook)){
-                map.put("code", 1);
-                return map;
-            }
-            map.put("code", 2);
-            return map;
-        }
-        map.put("code", 0);
-        return map;
-    }
+
 
 }
