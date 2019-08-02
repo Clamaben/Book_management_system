@@ -54,6 +54,6 @@
     <select id="findBookByname" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
         from book
-        where name = "%"#{_parameter}"%"
+        where name like "%"#{_parameter}"%"
     </select>
 </mapper>

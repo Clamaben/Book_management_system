@@ -77,15 +77,14 @@ CREATE TABLE `user`  (
   `username` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `password` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `role` enum('ADMIN','BORROWER','LIBRARIAN') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `date` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'test', '123456', 'ADMIN', NULL);
-INSERT INTO `user` VALUES (2, 'TianaoGe', '123456', 'LIBRARIAN', NULL);
-INSERT INTO `user` VALUES (3, 'ChaofanZhu', '123456', 'BORROWER', NULL);
+INSERT INTO `user` VALUES (1, 'test', '123456', 'ADMIN');
+INSERT INTO `user` VALUES (2, 'TianaoGe', '123456', 'LIBRARIAN');
+INSERT INTO `user` VALUES (3, 'ChaofanZhu', '123456', 'BORROWER');
 
 SET FOREIGN_KEY_CHECKS = 1;
