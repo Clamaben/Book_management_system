@@ -35,26 +35,5 @@
 <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script>
-    $(function () {
-        $.ajax({
-            url: 'http://localhost:8080/people/librarian/demo',
-            method: 'post',
-            contentType: "application/json",
-            data: JSON.stringify({
-                id: 1,
-                name: "asdf"
-            }),
-            success: function (data) {
-                alert('成了');
-            },
-            error: function () {
-                alert("沒完成")
-            }
-
-
-        })
-    })
-</script>
 </body>
 </html>
