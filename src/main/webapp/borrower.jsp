@@ -70,7 +70,8 @@
                 </ul>
             </div>
         </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" >
 
 
 
@@ -118,7 +119,7 @@
         var str='<li style="display: inline-block">\n' +
             '<div style="margin: 30px">\n' +
             '<div class="cover shadow-cover">\n' +
-            '<img src="${root}/static/bookpic/1.jpg" width="70%"height="70%"></img>\n' +
+            '<img src="${root}/static/'+data.img_url+' " width="70%"height="70%"></img>\n' +
             '</div>\n' +
             '<div class="info">\n' +
             '<h4 class="title">'+data.name+'</h4>\n' +
@@ -178,7 +179,7 @@
         $.ajax({
             type:'post',
             url:'${root}/borrower/getBorrowRecord',
-            data:{name:name},
+            data:{borrowername:name},
             success:function (jsonData) {
                 var text=[];
                 text.push("<div class=\"container\">\n" +
@@ -287,7 +288,7 @@
             '<p class="mb-1">&copy; 2019-2020 小谭全球粉丝后援会</p>\n' +
             '</footer>')
     })
-    //因为用户名成为标识了，所以修改个人信息不允许修改用户名，只能修改密码
+    //因为用户名成为标识了，所以修改个人信息不允许修改用户名，只能修改密码 adminController方法还没有改
     function settingInformation() {
         var name='<security:authentication property="principal.username"></security:authentication>'
         var changedPassword=$('#Password').val();
