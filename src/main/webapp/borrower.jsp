@@ -172,12 +172,12 @@
             }
         })
     })
-    //显示已借阅书籍，传用户name到后端 需要返回一个该用户的借书list controller里还没写
+    //显示已借阅书籍，传用户name到后端
     $('#booksBorrowed').click(function () {
         var name='<security:authentication property="principal.username"></security:authentication>'
         $.ajax({
             type:'post',
-            url:'${root}/getBooksByBorrowerName',
+            url:'${root}/borrower/getBorrowRecord',
             data:{name:name},
             success:function (jsonData) {
                 var text=[];
