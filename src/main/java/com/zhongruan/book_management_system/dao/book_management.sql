@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 01/08/2019 18:00:35
+ Date: 02/08/2019 10:41:36
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,7 @@ CREATE TABLE `book`  (
 -- ----------------------------
 -- Records of book
 -- ----------------------------
-INSERT INTO `book` VALUES (1, 'C++ primer', 'ISBN123456', 'CS', 'a book to learn c++', 'images/1.jpg', 1, 0, NULL);
+INSERT INTO `book` VALUES (1, 'C++ primer', 'ISBN123456', 'CS', 'a book to learn c++', 'images/1.jpg', 10, 0, NULL);
 INSERT INTO `book` VALUES (2, 'Machine Yearning', 'ISBN123123', 'CS', 'a book to learn machine learning', 'images/2.jpg', 0, 0, NULL);
 INSERT INTO `book` VALUES (3, '十二个圣诞古树', 'ISBN9787559618566', 'fiction', '《橘子不是唯一的水果》作者珍妮特·温特森的魔法时间！', 'images/3.jpg', 1, 0, NULL);
 INSERT INTO `book` VALUES (4, '无羁', 'ISBN9787541151736', 'fiction', '这一次，“夷陵老祖”魏无羡与“含光君”蓝忘机携手探秘，能否解开这几十年间的重重谜团？', 'images/4.jpg', 1, 0, NULL);
@@ -58,15 +58,17 @@ CREATE TABLE `borrowerrecord`  (
   `recordId` int(11) NOT NULL AUTO_INCREMENT,
   `borrowerId` int(11) NOT NULL,
   `bookId` int(11) NOT NULL,
-  `status` enum('1','0') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `status` int(11) NULL DEFAULT NULL,
   `borrowTime` date NULL DEFAULT NULL,
   PRIMARY KEY (`recordId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of borrowerrecord
 -- ----------------------------
-INSERT INTO `borrowerrecord` VALUES (1, 1, 1, '0', '2019-08-20');
+INSERT INTO `borrowerrecord` VALUES (1, 1, 1, 0, '2019-08-01');
+INSERT INTO `borrowerrecord` VALUES (2, 1, 1, 1, '1970-01-01');
+INSERT INTO `borrowerrecord` VALUES (3, 1, 1, 0, '2019-08-02');
 
 -- ----------------------------
 -- Table structure for user
@@ -76,7 +78,7 @@ CREATE TABLE `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `password` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `role` enum('ADMIN','BORROWER','LIBRARIAN') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `role` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 

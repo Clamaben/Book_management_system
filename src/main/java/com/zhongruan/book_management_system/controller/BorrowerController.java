@@ -48,7 +48,7 @@ public class BorrowerController {
                 borrowRecord.setBookId(bookid);
                 borrowRecord.setBorrowerId(borrowerid);
                 borrowRecord.setStatus(1);
-                borrowRecord.setBorrowTime(new Date(0));
+                borrowRecord.setBorrowTime(new Date());
                 if(bookService.BorrowingBookByid(bookid)&&borrowRecordService.AddBorrowRecord(borrowRecord)){
                     map.put("code", 1);
                     return map;
@@ -68,10 +68,29 @@ public class BorrowerController {
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
             BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, borrowerid);
-            if (bookService.ReturningBookByid(bookid)&&borrowRecordService.UpdateBorrowRecordStatus(borrowRecord)) {
+            if (borrowRecordService.UpdateBorrowRecordStatus(borrowRecord)&&bookService.ReturningBookByid(bookid)) {
                 map.put("code", 1);
                 return map;
             }
+        }
+        map.put("code", 0);
+        return map;
+    }
+    //返回当前用户的所有借阅书籍
+    @RequestMapping("getBorrowRecord")
+    @ResponseBody
+    public Map getBorrowRecord (@RequestParam("borrowerid") int borrowerid) {
+        Map map = new HashMap<>();
+        List<BorrowRecord> borrowRecordList = borrowRecordService.FindBorrowRecordByBorrowerid(borrowerid);
+        if (borrowRecordList.size() > 0) {
+            List<Book> bookList = null;
+            for (BorrowRecord br:borrowRecordList) {
+                bookList.add(bookService.FindBookByid(br.getBookId()));
+            }
+            map.put("booklist", bookList);
+            map.put("borrowrecordlist", borrowRecordList);
+            map.put("code", 1);
+            return map;
         }
         map.put("code", 0);
         return map;

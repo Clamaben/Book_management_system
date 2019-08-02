@@ -11,7 +11,7 @@
         <set>
             status = 0
         </set>
-        where id = #{recordId};
+        where recordId = #{recordId};
     </update>
 
     <select id="FindBorrowRecordByid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
@@ -33,6 +33,6 @@
             resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
         select *
         from borrowerrecord
-        where bookId = #{0} and borrowerId = #{1};
+        where bookId = #{bookid} and borrowerId = #{borrowerid};
     </select>
 </mapper>
