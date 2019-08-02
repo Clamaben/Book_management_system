@@ -53,18 +53,18 @@ public class IndexController {
         return "register";
     }
 
-    //注册接口，code 0失败，1成功，2用户名重复，只有借阅者可以注册，管理员需要后台添加
-    @RequestMapping(value = "register",method = RequestMethod.POST)
+    //注册接口，code 0成功，1失败，2用户名重复，只有借阅者可以注册，管理员需要后台添加
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
     public Map register(User user) {
         Map<String, Object> map = new HashMap<>();
-        if(userService.getUserByname(user.getUsername())!=null){
-            map.put("code",2);
+        if (userService.getUserByname(user.getUsername()) != null) {
+            map.put("code", 2);
             return map;
         }
         user.setRole("BORROWER");
         int flag = userService.add(user);
-        map.put("code", flag);
+        map.put("code", flag == 1 ? 0 : 1);
         return map;
     }
 }
