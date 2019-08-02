@@ -18,4 +18,5 @@ public interface IBookService {
     boolean DeleteBookByid(int id);
     //修改一本书
     boolean UpdataBook(Book book);
+    List<Book> getSomeBooks(int pageNum, int pageSize);
 }

@@ -3,8 +3,8 @@
 <mapper namespace="com.zhongruan.book_management_system.dao.IBookDao">
     <insert id="AddBook">
         insert into book
-            (name, ISBN, type, description, img_url, stock, onLoan, author)
-        values (#{name}, #{ISBN}, #{type}, #{description}, #{img_url}, #{stock}, #{onLoan}, #{author});
+        (name, ISBN, type, description, img_url, stock, onLoan, author)
+        values (#{name},#{ISBN},#{type},#{description},#{img_url},#{stock},#{onLoan},#{author})
     </insert>
     <update id="BorrowingBookByid">
         update book
@@ -12,65 +12,48 @@
             stock = stock-1
         </set>
         where
-        id=#{_parameter};
+        id=#{_parameter}
     </update>
     <update id="ReturningBookByid">
         update book
         <set>
-            stock = stock+1
+                stock = stock+1
         </set>
         where
-        id=#{_parameter};
+        id=#{_parameter}
     </update>
     <update id="UpdataBook">
         update book
         <set>
-            <if test="name!=null and name!=''">
-                name=#{name},
-            </if>
-            <if test="ISBN!=null and ISBN!=''">
-                ISBN=#{ISBN},
-            </if>
-            <if test="type!=null and type!=''">
-                type=#{type},
-            </if>
-            <if test="description!=null and description!=''">
-                `description`=#{description},
-            </if>
-            <if test="img_url!=null and img_url!=''">
-                img_url=#{img_url},
-            </if>
-            <if test="stock!=null and stock!=''">
-                stock=#{stock},
-            </if>
-            <if test="onLoan!=null and onLoan!=''">
-                onLoan=#{onLoan},
-            </if>
-            <if test="author!=null and author!=''">
-                author=#{author}
-            </if>
+            name=#{name},
+            ISBN=#{ISBN},
+            type=#{type},
+            description=#{description},
+            img_url=#{img_url},
+            stock=#{stock},
+            onLoan=#{onLoan},
+            author=#{author}
         </set>
-        where id = #{id};
+        where id = id
     </update>
     <delete id="DeleteBookByid">
-        delete
-        from book
-        where id = #{_parameter};
+        delete from  book
+        where id=#{_parameter}
     </delete>
 
 
     <select id="findBookByid" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
         from book
-        where id = #{_parameter};
+        where id = #{_parameter}
     </select>
     <select id="getAllBooks" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
-        from book;
+        from book
     </select>
     <select id="findBookByname" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
         from book
-        where name like "%${_parameter}%"
+        where name like "%"#{_parameter}"%"
     </select>
 </mapper>

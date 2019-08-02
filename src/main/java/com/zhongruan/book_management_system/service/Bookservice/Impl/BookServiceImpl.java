@@ -1,5 +1,6 @@
 package com.zhongruan.book_management_system.service.Bookservice.Impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zhongruan.book_management_system.dao.IBookDao;
 import com.zhongruan.book_management_system.entity.Book;
 import com.zhongruan.book_management_system.service.Bookservice.IBookService;
@@ -50,6 +51,12 @@ public class BookServiceImpl implements IBookService {
     @Override
     public boolean UpdataBook(Book book) {
         return bookDao.UpdataBook(book);
+    }
+
+    @Override
+    public List<Book> getSomeBooks(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        return bookDao.getAllBooks();
     }
 
 }

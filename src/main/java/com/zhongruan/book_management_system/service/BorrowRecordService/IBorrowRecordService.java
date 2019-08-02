@@ -20,4 +20,5 @@ public interface IBorrowRecordService {
     //通过书籍id和借阅者id寻找记录
     BorrowRecord FindBorrowRecordByBookidAndBorrowerid(@Param(value = "bookid")int bookid, @Param(value = "Borrowerid")int Borrowerid);
 
+    List< BorrowRecord> getSomeBorrowRecord(int pageNum, int pageSize ,int id);
 }

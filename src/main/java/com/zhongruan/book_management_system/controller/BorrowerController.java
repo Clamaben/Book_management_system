@@ -1,6 +1,8 @@
 package com.zhongruan.book_management_system.controller;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhongruan.book_management_system.entity.Book;
 import com.zhongruan.book_management_system.entity.BorrowRecord;
 import com.zhongruan.book_management_system.entity.User;
@@ -37,18 +39,20 @@ public class BorrowerController {
     public String mainpage() {
         return "borrower";
     }
+    public int getidbyname(String name){
+        return userService.getUserByname(name).getId();
+    }
     //通过id借书,map中的code值集含义：0=书籍不存在；1=借阅成功；2=借阅失败，库存为0
     @RequestMapping("BorroweingBookByid")
     @ResponseBody
     public Map BorroweingBookByid (@RequestParam("borrowername") String borrowername,@RequestParam("bookid") int bookid) {
         Map map = new HashMap<>();
-        User borrower = userService.getUserByname(borrowername);
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
             if (book.getStock()!=0){
                 BorrowRecord borrowRecord = new BorrowRecord();
                 borrowRecord.setBookId(bookid);
-                borrowRecord.setBorrowerId(borrower.getId());
+                borrowRecord.setBorrowerId(getidbyname(borrowername));
                 borrowRecord.setStatus(1);
                 borrowRecord.setBorrowTime(new Date());
                 if(bookService.BorrowingBookByid(bookid)&&borrowRecordService.AddBorrowRecord(borrowRecord)){
@@ -69,8 +73,7 @@ public class BorrowerController {
         Map map = new HashMap<>();
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
-            User borrower = userService.getUserByname(borrowername);
-            BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, borrower.getId());
+            BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, getidbyname(borrowername));
             if (borrowRecordService.UpdateBorrowRecordStatus(borrowRecord)&&bookService.ReturningBookByid(bookid)) {
                 map.put("code", 1);
                 return map;
@@ -82,9 +85,9 @@ public class BorrowerController {
     //返回当前用户的所有借阅书籍
     @RequestMapping("getBorrowRecord")
     @ResponseBody
-    public Map getBorrowRecord (@RequestParam("borrowerid") int borrowerid) {
+    public Map getBorrowRecord (@RequestParam("borrowername") String borrowername) {
         Map map = new HashMap<>();
-        List<BorrowRecord> borrowRecordList = borrowRecordService.FindBorrowRecordByBorrowerid(borrowerid);
+        List<BorrowRecord> borrowRecordList = borrowRecordService.FindBorrowRecordByBorrowerid(getidbyname(borrowername));
         if (borrowRecordList.size() > 0) {
             List<Book> bookList = null;
             for (BorrowRecord br:borrowRecordList) {
@@ -98,4 +101,29 @@ public class BorrowerController {
         map.put("code", 0);
         return map;
     }
+    //所有书籍分页显示
+    @RequestMapping("/getSomeBooks")
+    @ResponseBody
+    public Map getSomeBooks(@RequestParam(defaultValue = "1") int pageNum,
+                               @RequestParam(defaultValue = "10") int pageSize){
+        Map map = new HashMap<>();
+        List<Book> books = bookService.getSomeBooks(pageNum,pageSize);
+        PageInfo<Book> pageInfo=new PageInfo(books);
+        map.put("pageInfo",pageInfo);
+        return map;
+    }
+    //所有个人借阅记录分页显示
+    @RequestMapping("/getSomeBR")
+    @ResponseBody
+    public Map getSomeBR(@RequestParam(defaultValue = "1") int pageNum,
+                            @RequestParam(defaultValue = "10") int pageSize,
+                         @RequestParam("borrowername") String borrowername
+    ){
+        Map map = new HashMap<>();
+        List<BorrowRecord> borrowRecords = borrowRecordService.getSomeBorrowRecord(pageNum,pageSize,getidbyname(borrowername));
+        PageInfo<Book> pageInfo=new PageInfo(borrowRecords);
+        map.put("pageInfo",pageInfo);
+        return map;
+    }
+
 }
