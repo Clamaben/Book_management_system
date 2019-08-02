@@ -37,7 +37,6 @@ public class BookController {
 }
     //通过id查询一本书
     @RequestMapping("getBookByid")
-    @ResponseBody
     public Map getBookByid (@RequestParam("id") int id) {
         Map map = new HashMap<>();
         Book book = bookService.FindBookByid(id);
@@ -51,7 +50,6 @@ public class BookController {
     }
     //通过书名模糊查询返回书籍列表
     @RequestMapping("getBooksByname")
-    @ResponseBody
     public Map getBooksByname (@RequestParam("name") String name) {
         Map map = new HashMap<>();
         List<Book> books = bookService.FindBooksByname(name);
