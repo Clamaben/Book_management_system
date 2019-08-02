@@ -35,6 +35,6 @@
         where id = #{_parameter}
     </select>
     <select id="queryById" resultType="com.zhongruan.book_management_system.entity.User">
-        select * from user where username=#{username}
+        select * from user where id=#{id}
     </select>
 </mapper>

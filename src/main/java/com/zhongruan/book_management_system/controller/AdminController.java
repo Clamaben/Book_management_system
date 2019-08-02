@@ -49,8 +49,13 @@ public class AdminController {
     public Map add(User user)
     {
         System.out.println(user);
-        int flag=userService.add(user);
         Map<String,Object> map=new HashMap<>();
+        if(userService.getUserByname(user.getUsername())!=null){
+            map.put("code",2);
+            map.put("msg","用户名重复");
+            return map;
+        }
+        int flag=userService.add(user);
         if(flag==1)
         {
             map.put("msg","添加成功");
@@ -93,11 +98,17 @@ public class AdminController {
         Map<String,Object> map=new HashMap<>();
         if(db_user==null)
         {
+            map.put("code",1);
             map.put("msg","不存在该用户");
             return map;
         }else
         {
-            map.put("msg","你要查询的信息是"+"id="+db_user.getId()+"  "+"username="+db_user.getUsername()+"  "+"password"+db_user.getPassword());
+            map.put("code",0);
+            map.put("msg","查询成功");
+            map.put("id",db_user.getId());
+            map.put("username",db_user.getUsername());
+            map.put("password",db_user.getPassword());
+            map.put("role",db_user.getRole());
             return map;
         }
     }

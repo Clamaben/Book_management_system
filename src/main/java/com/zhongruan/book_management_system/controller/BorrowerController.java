@@ -14,13 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("borrower")
@@ -39,90 +37,110 @@ public class BorrowerController {
     public String mainpage() {
         return "borrower";
     }
-    public int getidbyname(String name){
+
+    public int getidbyname(String name) {
         return userService.getUserByname(name).getId();
     }
-    //通过id借书,map中的code值集含义：0=书籍不存在；1=借阅成功；2=借阅失败，库存为0
-    @RequestMapping("BorroweingBookByid")
+
+    //通过id借书,map中的code值集含义：0=借阅成功；1=书籍不存在；2=借阅失败，库存为0
+    @RequestMapping(value = "BorroweingBookByid", method = RequestMethod.POST)
     @ResponseBody
-    public Map BorroweingBookByid (@RequestParam("borrowername") String borrowername,@RequestParam("bookid") int bookid) {
-        Map map = new HashMap<>();
+    public Map BorroweingBookByid(@RequestParam("borrowername") String borrowername,
+                                  @RequestParam("bookid") int bookid) {
+        Map<String, Object> map = new HashMap<>();
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
-            if (book.getStock()!=0){
+            if (book.getStock() - book.getOnLoan() > 0) {
                 BorrowRecord borrowRecord = new BorrowRecord();
                 borrowRecord.setBookId(bookid);
                 borrowRecord.setBorrowerId(getidbyname(borrowername));
                 borrowRecord.setStatus(1);
                 borrowRecord.setBorrowTime(new Date());
-                if(bookService.BorrowingBookByid(bookid)&&borrowRecordService.AddBorrowRecord(borrowRecord)){
-                    map.put("code", 1);
+                if (bookService.BorrowingBookByid(bookid) && borrowRecordService.AddBorrowRecord(borrowRecord)) {
+                    map.put("code", 0);
+                    map.put("msg", "借阅成功");
                     return map;
                 }
             }
             map.put("code", 2);
+            map.put("msg", "借阅失败，书籍数量不足");
             return map;
         }
-        map.put("code", 0);
+        map.put("code", 1);
+        map.put("msg", "借阅失败，书籍不存在");
         return map;
     }
-    //通过id归还一本书，map中的code值集含义：0=书籍不存在；1=归还成功；
+
+    //通过id归还一本书，map中的code值集含义：0=归还成功；1=书籍不存在；
     @RequestMapping("ReturningBookByid")
     @ResponseBody
-    public Map ReturningBookByid (@RequestParam("borrowername") String borrowername,@RequestParam("bookid") int bookid) {
-        Map map = new HashMap<>();
+    public Map ReturningBookByid(@RequestParam("borrowername") String borrowername,
+                                 @RequestParam("bookid") int bookid) {
+        Map<String, Object> map = new HashMap<>();
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
+            if(book.getOnLoan()<=0){
+                map.put("code",1);
+                map.put("msg","没有书籍借出");
+                return map;
+            }
             BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, getidbyname(borrowername));
-            if (borrowRecordService.UpdateBorrowRecordStatus(borrowRecord)&&bookService.ReturningBookByid(bookid)) {
-                map.put("code", 1);
+            if (borrowRecordService.UpdateBorrowRecordStatus(borrowRecord) && bookService.ReturningBookByid(bookid)) {
+                map.put("code", 0);
+                map.put("msg", "归还成功");
                 return map;
             }
         }
-        map.put("code", 0);
+        map.put("code", 1);
+        map.put("msg", "归还失败，书籍不存在");
         return map;
     }
+
     //返回当前用户的所有借阅书籍
     @RequestMapping("getBorrowRecord")
     @ResponseBody
-    public Map getBorrowRecord (@RequestParam("borrowername") String borrowername) {
-        Map map = new HashMap<>();
+    public Map getBorrowRecord(@RequestParam("borrowername") String borrowername) {
+        Map<String, Object> map = new HashMap<>();
         List<BorrowRecord> borrowRecordList = borrowRecordService.FindBorrowRecordByBorrowerid(getidbyname(borrowername));
         if (borrowRecordList.size() > 0) {
-            List<Book> bookList = null;
-            for (BorrowRecord br:borrowRecordList) {
+            List<Book> bookList = new ArrayList<>();
+            for (BorrowRecord br : borrowRecordList) {
                 bookList.add(bookService.FindBookByid(br.getBookId()));
             }
             map.put("booklist", bookList);
             map.put("borrowrecordlist", borrowRecordList);
-            map.put("code", 1);
+            map.put("code", 0);
+            map.put("msg", "查询成功");
             return map;
         }
-        map.put("code", 0);
+        map.put("code", 1);
+        map.put("msg", "查询失败");
         return map;
     }
+
     //所有书籍分页显示
     @RequestMapping("/getSomeBooks")
     @ResponseBody
-    public Map getSomeBooks(@RequestParam(defaultValue = "1") int pageNum,
-                               @RequestParam(defaultValue = "10") int pageSize){
-        Map map = new HashMap<>();
-        List<Book> books = bookService.getSomeBooks(pageNum,pageSize);
-        PageInfo<Book> pageInfo=new PageInfo(books);
-        map.put("pageInfo",pageInfo);
+    public Map getSomeBooks(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                            @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        List<Book> books = bookService.getSomeBooks(pageNum, pageSize);
+        PageInfo<Book> pageInfo = new PageInfo<>(books);
+        map.put("pageInfo", pageInfo);
         return map;
     }
+
     //所有个人借阅记录分页显示
     @RequestMapping("/getSomeBR")
     @ResponseBody
-    public Map getSomeBR(@RequestParam(defaultValue = "1") int pageNum,
-                            @RequestParam(defaultValue = "10") int pageSize,
+    public Map getSomeBR(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                         @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
                          @RequestParam("borrowername") String borrowername
-    ){
-        Map map = new HashMap<>();
-        List<BorrowRecord> borrowRecords = borrowRecordService.getSomeBorrowRecord(pageNum,pageSize,getidbyname(borrowername));
-        PageInfo<Book> pageInfo=new PageInfo(borrowRecords);
-        map.put("pageInfo",pageInfo);
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        List<BorrowRecord> borrowRecords = borrowRecordService.getSomeBorrowRecord(pageNum, pageSize, getidbyname(borrowername));
+        PageInfo<BorrowRecord> pageInfo = new PageInfo<>(borrowRecords);
+        map.put("pageInfo", pageInfo);
         return map;
     }
 
