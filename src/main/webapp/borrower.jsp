@@ -202,8 +202,8 @@
                     "\n" +
                     "<tbody>");
 
-                for (var i=0;i<jsonData.Books.length;i++){
-                    text.push(borrowedbookContent(jsonData.Books[i]));
+                for (var i=0;i<jsonData.booklist.length;i++){
+                    text.push(borrowedbookContent(jsonData.booklist[i]));
                 }
 
                 text.push("</tbody>\n" +

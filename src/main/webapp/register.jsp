@@ -80,18 +80,22 @@ function finishRegister() {
     if($('#username').val()=="")
     {
         alert('用户名不能为空');
+        return;
     }
     if($('#password').val()=="")
     {
         alert('密码不能为空');
+        return;
     }
     if($('#passwordAgain').val()=="")
     {
         alert('确认密码不能为空');
+        return;
     }
     if($('#password').val()!=$('#passwordAgain').val())
     {
         alert('两次代码需要一致');
+        return;
     }
     var name=$('#username').val()
     var password=$('#password').val()
