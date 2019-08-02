@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,8 +22,8 @@ public class BookController {
     IBookService bookService;
 
     //返回所有books
-    @RequestMapping("getAllBooks")
     @ResponseBody
+    @RequestMapping(value = "getAllBooks", method = RequestMethod.POST)
     public Map getAllBooks() {
         Map map = new HashMap<>();
         List<Book> books = bookService.getAllBooks();
@@ -33,7 +34,7 @@ public class BookController {
         }
         map.put("code", 0);
         return map;
-    }
+}
     //通过id查询一本书
     @RequestMapping("getBookByid")
     @ResponseBody
@@ -63,5 +64,13 @@ public class BookController {
         return map;
     }
 
+    @RequestMapping("toBookManage")
+    public String toBookManage (Model model) {
+
+        List<Book> bookList =bookService.getAllBooks();
+        model.addAttribute("bookList",bookList);
+
+        return "book_manage";
+    }
 
 }
