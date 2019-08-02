@@ -3,6 +3,7 @@ package com.zhongruan.book_management_system.controller;
 
 import com.zhongruan.book_management_system.entity.Book;
 import com.zhongruan.book_management_system.entity.BorrowRecord;
+import com.zhongruan.book_management_system.entity.User;
 import com.zhongruan.book_management_system.service.Bookservice.IBookService;
 import com.zhongruan.book_management_system.service.BorrowRecordService.IBorrowRecordService;
 import com.zhongruan.book_management_system.service.BorrowRecordService.Impl.BorrowRecordServiceImpl;
@@ -39,14 +40,15 @@ public class BorrowerController {
     //通过id借书,map中的code值集含义：0=书籍不存在；1=借阅成功；2=借阅失败，库存为0
     @RequestMapping("BorroweingBookByid")
     @ResponseBody
-    public Map BorroweingBookByid (@RequestParam("borrowerid") int borrowerid,@RequestParam("bookid") int bookid) {
+    public Map BorroweingBookByid (@RequestParam("borrowername") String borrowername,@RequestParam("bookid") int bookid) {
         Map map = new HashMap<>();
+        User borrower = userService.getUserByname(borrowername);
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
             if (book.getStock()!=0){
                 BorrowRecord borrowRecord = new BorrowRecord();
                 borrowRecord.setBookId(bookid);
-                borrowRecord.setBorrowerId(borrowerid);
+                borrowRecord.setBorrowerId(borrower.getId());
                 borrowRecord.setStatus(1);
                 borrowRecord.setBorrowTime(new Date());
                 if(bookService.BorrowingBookByid(bookid)&&borrowRecordService.AddBorrowRecord(borrowRecord)){
@@ -63,11 +65,12 @@ public class BorrowerController {
     //通过id归还一本书，map中的code值集含义：0=书籍不存在；1=归还成功；
     @RequestMapping("ReturningBookByid")
     @ResponseBody
-    public Map ReturningBookByid (@RequestParam("borrowerid") int borrowerid,@RequestParam("bookid") int bookid) {
+    public Map ReturningBookByid (@RequestParam("borrowername") String borrowername,@RequestParam("bookid") int bookid) {
         Map map = new HashMap<>();
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
-            BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, borrowerid);
+            User borrower = userService.getUserByname(borrowername);
+            BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, borrower.getId());
             if (borrowRecordService.UpdateBorrowRecordStatus(borrowRecord)&&bookService.ReturningBookByid(bookid)) {
                 map.put("code", 1);
                 return map;
