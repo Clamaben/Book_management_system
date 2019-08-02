@@ -1,5 +1,6 @@
 package com.zhongruan.book_management_system.service.BorrowRecordService.Impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zhongruan.book_management_system.dao.IBorroweRecordDao;
 import com.zhongruan.book_management_system.entity.BorrowRecord;
 import com.zhongruan.book_management_system.service.BorrowRecordService.IBorrowRecordService;
@@ -46,5 +47,11 @@ public class BorrowRecordServiceImpl implements IBorrowRecordService {
             }
         }
         return borrowRecord;
+    }
+
+    @Override
+    public List<BorrowRecord> getSomeBorrowRecord(int pageNum, int pageSize, int id) {
+        PageHelper.startPage(pageNum,pageSize);
+        return borroweRecordDao.FindBorrowRecordByBorrowerid(id);
     }
 }

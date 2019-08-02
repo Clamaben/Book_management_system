@@ -4,35 +4,35 @@
     <insert id="AddBorrowRecord">
         insert into borrowerrecord
         (borrowerId, bookId, status, borrowTime)
-        values (#{borrowerId},#{bookId},#{status},#{borrowTime});
+        values (#{borrowerId},#{bookId},#{status},#{borrowTime})
     </insert>
     <update id="UpdateBorrowRecordStatus">
         update borrowerrecord
         <set>
             status = 0
         </set>
-        where recordId = #{recordId};
+        where recordId = #{recordId}
     </update>
 
     <select id="FindBorrowRecordByid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
         select *
         from borrowerrecord
-        where id = #{_parameter};
+        where id = #{_parameter}
     </select>
     <select id="FindBorrowRecordByBorrowerid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
         select *
         from borrowerrecord
-        where borrowerId = #{_parameter};
+        where borrowerId = #{_parameter}
     </select>
     <select id="FindBorrowRecordByBookid" resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
         select *
         from borrowerrecord
-        where bookId = #{_parameter};
+        where bookId = #{_parameter}
     </select>
     <select id="FindBorrowRecordByBookidAndBorrowerid"
             resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
         select *
         from borrowerrecord
-        where bookId = #{bookid} and borrowerId = #{borrowerid};
+        where bookId = #{bookid} and borrowerId = #{borrowerid}
     </select>
 </mapper>

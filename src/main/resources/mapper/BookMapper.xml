@@ -4,7 +4,7 @@
     <insert id="AddBook">
         insert into book
         (name, ISBN, type, description, img_url, stock, onLoan, author)
-        values (#{name},#{ISBN},#{type},#{description},#{img_url},#{stock},#{onLoan},#{author});
+        values (#{name},#{ISBN},#{type},#{description},#{img_url},#{stock},#{onLoan},#{author})
     </insert>
     <update id="BorrowingBookByid">
         update book
@@ -12,7 +12,7 @@
             stock = stock-1
         </set>
         where
-        id=#{_parameter};
+        id=#{_parameter}
     </update>
     <update id="ReturningBookByid">
         update book
@@ -20,7 +20,7 @@
                 stock = stock+1
         </set>
         where
-        id=#{_parameter};
+        id=#{_parameter}
     </update>
     <update id="UpdataBook">
         update book
@@ -34,22 +34,22 @@
             onLoan=#{onLoan},
             author=#{author}
         </set>
-        where id = id;
+        where id = id
     </update>
     <delete id="DeleteBookByid">
         delete from  book
-        where id=#{_parameter};
+        where id=#{_parameter}
     </delete>
 
 
     <select id="findBookByid" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
         from book
-        where id = #{_parameter};
+        where id = #{_parameter}
     </select>
     <select id="getAllBooks" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
-        from book;
+        from book
     </select>
     <select id="findBookByname" resultType="com.zhongruan.book_management_system.entity.Book">
         select *
