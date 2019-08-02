@@ -3,13 +3,13 @@
 <mapper namespace="com.zhongruan.book_management_system.dao.IBookDao">
     <insert id="AddBook">
         insert into book
-        (name, ISBN, type, description, img_url, stock, onLoan, author)
-        values (#{name},#{ISBN},#{type},#{description},#{img_url},#{stock},#{onLoan},#{author})
+            (name, ISBN, type, description, img_url, stock, onLoan, author)
+        values (#{name}, #{ISBN}, #{type}, #{description}, #{img_url}, #{stock}, #{onLoan}, #{author})
     </insert>
     <update id="BorrowingBookByid">
         update book
         <set>
-            stock = stock-1
+            onLoan = onLoan + 1
         </set>
         where
         id=#{_parameter}
@@ -17,7 +17,7 @@
     <update id="ReturningBookByid">
         update book
         <set>
-                stock = stock+1
+            onLoan = onLoan - 1
         </set>
         where
         id=#{_parameter}
@@ -37,8 +37,9 @@
         where id = id
     </update>
     <delete id="DeleteBookByid">
-        delete from  book
-        where id=#{_parameter}
+        delete
+        from book
+        where id = #{_parameter}
     </delete>
 
 

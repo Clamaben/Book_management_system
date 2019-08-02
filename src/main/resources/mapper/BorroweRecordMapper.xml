@@ -9,7 +9,7 @@
     <update id="UpdateBorrowRecordStatus">
         update borrowerrecord
         <set>
-            status = 0
+            status = '0'
         </set>
         where recordId = #{recordId}
     </update>

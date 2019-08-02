@@ -53,7 +53,7 @@ public class IndexController {
         return "register";
     }
 
-    //注册接口，code 0失败，1成功，2用户名重复
+    //注册接口，code 0失败，1成功，2用户名重复，只有借阅者可以注册，管理员需要后台添加
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ResponseBody
     public Map register(User user) {
