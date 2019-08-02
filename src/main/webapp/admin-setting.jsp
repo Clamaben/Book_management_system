@@ -79,33 +79,24 @@
                     <h3>设置个人信息</h3>
                 </div>
                 <div class="col-md-12 ">
-                    <form class="needs-validation" novalidate>
+                    <form>
 
                         <div align="center">
                             <div class="col-md-6" >
-                                <label for="Name">用户名</label>
-                                <input type="text" class="form-control" id="Name"  placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    请输入用户名
-                                </div>
+                                <label>用户名</label>
+                                <security:authentication property="principal.username"></security:authentication>
                             </div>
                         </div>
                         <div align="center">
                             <div class="col-md-6" >
                                 <label for="Password">密码</label>
-                                <input type="text" class="form-control" id="Password"  placeholder="" value="" required>
-                                <div class="invalid-feedback">
-                                    请输入密码
-                                </div>
+                                <input type="text" id="Password">
                             </div>
                         </div>
-
-
-                        <div style="margin: 30px" align="center"><button class="btn btn-primary btn-lg btn-block col-md-2" type="submit">提交</button></div>
+                        <div style="margin: 30px" align="center"><button class="btn btn-primary btn-lg btn-block col-md-2" type="submit" id="settiingButton">提交</button></div>
                     </form>
                 </div>
             </div>
-
             <footer class="my-5 pt-5 text-muted text-center text-small">
                 <p class="mb-1">&copy; 2019-2020 小谭全球粉丝后援会</p>
             </footer>

@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /people
+    context-path:
   port: 8080
 spring:
   mvc:
@@ -10,7 +10,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/book_management?serverTimezone=UTC
     username: root
-    password: root
+    password: 19971010,AN
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath:mapper/*.xml
