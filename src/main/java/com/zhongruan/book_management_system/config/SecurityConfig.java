@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //实际运行的时候用这个
         http
                 .authorizeRequests()//配置权限
-                .antMatchers("/toRegister", "register").permitAll()
+                .antMatchers("/toRegister", "/register").permitAll()
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/librarian/*").hasRole("LIBRARIAN")
                 .antMatchers("/borrower/*").hasRole("BORROWER")
