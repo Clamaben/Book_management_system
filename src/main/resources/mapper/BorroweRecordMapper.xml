@@ -35,4 +35,10 @@
         from borrowerrecord
         where bookId = #{bookid} and borrowerId = #{borrowerid}
     </select>
+    <select id="FindBorrowRecordByBorroweridStatusis1"
+            resultType="com.zhongruan.book_management_system.entity.BorrowRecord">
+         select *
+        from borrowerrecord
+        where borrowerId = #{_parameter} and status = 1
+    </select>
 </mapper>

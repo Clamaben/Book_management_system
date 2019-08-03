@@ -18,5 +18,6 @@ public interface IBorroweRecordDao {
     boolean AddBorrowRecord(BorrowRecord borrowRecord);
     //修改一条记录的状态为归还
     boolean UpdateBorrowRecordStatus(BorrowRecord borrowRecord);
-
+    //通过借阅者id寻找未归还记录
+    List<BorrowRecord> FindBorrowRecordByBorroweridStatusis1(int id);
 }

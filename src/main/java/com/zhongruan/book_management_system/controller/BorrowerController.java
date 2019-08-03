@@ -101,13 +101,13 @@ public class BorrowerController {
     @ResponseBody
     public Map getBorrowRecord(@RequestParam("borrowername") String borrowername) {
         Map<String, Object> map = new HashMap<>();
-        List<BorrowRecord> borrowRecordList = borrowRecordService.FindBorrowRecordByBorrowerid(getidbyname(borrowername));
+        List<BorrowRecord> borrowRecordList = borrowRecordService.FindBorrowRecordByBorroweridStatusis1(getidbyname(borrowername));
         if (borrowRecordList.size() > 0) {
             List<Book> bookList = new ArrayList<>();
             for (BorrowRecord br : borrowRecordList) {
                 bookList.add(bookService.FindBookByid(br.getBookId()));
             }
-            map.put("booklist", bookList);
+            map.put("Books", bookList);
             map.put("borrowrecordlist", borrowRecordList);
             map.put("code", 0);
             map.put("msg", "查询成功");
@@ -140,7 +140,17 @@ public class BorrowerController {
         Map<String, Object> map = new HashMap<>();
         List<BorrowRecord> borrowRecords = borrowRecordService.getSomeBorrowRecord(pageNum, pageSize, getidbyname(borrowername));
         PageInfo<BorrowRecord> pageInfo = new PageInfo<>(borrowRecords);
-        map.put("pageInfo", pageInfo);
+        if (pageInfo.getSize()>0){
+            List<Book> books = new ArrayList<>();
+            for (int i=0;i<pageInfo.getList().size();i++) {
+                books.add(bookService.FindBookByid(borrowRecords.get(i).getBookId()));
+            }
+            map.put("books", books);
+            map.put("pageInfo", pageInfo);
+            map.put("code",0);
+            return map;
+        }
+        map.put("code",1);
         return map;
     }
 

@@ -10,6 +10,8 @@ public interface IBorrowRecordService {
     BorrowRecord FindBorrowRecordByid(int id);
     //通过借阅者id寻找记录
     List<BorrowRecord> FindBorrowRecordByBorrowerid(int id);
+    //通过借阅者id寻找未归还记录
+    List<BorrowRecord> FindBorrowRecordByBorroweridStatusis1(int id);
     //通过书籍id寻找一条记录
     List<BorrowRecord> FindBorrowRecordByBookid(int id);
 

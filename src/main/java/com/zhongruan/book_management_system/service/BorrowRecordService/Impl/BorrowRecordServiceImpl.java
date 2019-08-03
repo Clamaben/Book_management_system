@@ -24,6 +24,11 @@ BorrowRecordServiceImpl implements IBorrowRecordService {
     }
 
     @Override
+    public List<BorrowRecord> FindBorrowRecordByBorroweridStatusis1(int id) {
+        return borroweRecordDao.FindBorrowRecordByBorroweridStatusis1(id);
+    }
+
+    @Override
     public List<BorrowRecord> FindBorrowRecordByBookid(int id) {
         return borroweRecordDao.FindBorrowRecordByBookid(id);
     }

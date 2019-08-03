@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -42,13 +43,19 @@ public class AdminController {
         map.put("code",0);
         return map;
     }
-
+    @RequestMapping("getAllUser")
+    @ResponseBody
+    public Map getAllUser () {
+        List<User> users = userService.getAllUsers();
+        Map<String,Object> map=new HashMap<>();
+        map.put("list", users);
+        return map;
+    }
 
     @RequestMapping("add")
     @ResponseBody
     public Map add(User user)
     {
-        System.out.println(user);
         Map<String,Object> map=new HashMap<>();
         if(userService.getUserByname(user.getUsername())!=null){
             map.put("code",2);

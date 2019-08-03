@@ -70,12 +70,7 @@
                 </ul>
             </div>
         </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" >
-
-
-
-
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
         </main>
     </div>
@@ -119,7 +114,7 @@
         var str='<li style="display: inline-block">\n' +
             '<div style="margin: 30px">\n' +
             '<div class="cover shadow-cover">\n' +
-            '<img src="${root}/static/'+data.img_url+' " width="70%"height="70%"></img>\n' +
+            '<img src="${root}/static/bookpic/1.jpg" width="70%"height="70%"></img>\n' +
             '</div>\n' +
             '<div class="info">\n' +
             '<h4 class="title">'+data.name+'</h4>\n' +
@@ -202,8 +197,8 @@
                     "\n" +
                     "<tbody>");
 
-                for (var i=0;i<jsonData.booklist.length;i++){
-                    text.push(borrowedbookContent(jsonData.booklist[i]));
+                for (var i=0;i<jsonData.Books.length;i++){
+                    text.push(borrowedbookContent(jsonData.Books[i]));
                 }
 
                 text.push("</tbody>\n" +
@@ -240,7 +235,6 @@
     function returnBook(tag)
     {
         var name='<security:authentication property="principal.username"></security:authentication>'
-        alert(tag.value);
         $.ajax({
             url:'${root}/borrower/ReturningBookByid',
             type:'post',
@@ -258,7 +252,44 @@
     }
 
     $('#loanRecord').click(function () {
-        alert("借阅记录")
+        var name='<security:authentication property="principal.username"></security:authentication>'
+        $.ajax({
+            url:'${root}/borrower/getSomeBR',
+            type:'post',
+            data:{borrowername:name},
+            success:function (jsonData) {
+                if(jsonData.code==0){
+                    var text=[];
+                    text.push(" <table class=\"table table-hover\">\n" +
+                        "                <thead>\n" +
+                        "                <tr>\n" +
+                        "                    <th scope=\"col\">Id</th>\n" +
+                        "                    <th scope=\"col\">BookName</th>\n" +
+                        "                    <th scope=\"col\">BorrowTime</th>\n" +
+                        "                    <th scope=\"col\">Status</th>\n" +
+                        "                </tr>\n" +
+                        "                </thead>\n" +
+                        "                <tbody>");
+                    for (var i = 0; i <jsonData.pageInfo.list.length; i++) {
+                        text.push("    <tr>\n" +
+                            "      <th scope=\"row\">"+jsonData.pageInfo.list[i].recordId+"</th>\n" +
+                            "      <td>"+jsonData.books[i].name+"</td>\n" +
+                            "      <td>"+jsonData.pageInfo.list[i].borrowTime+"</td>\n" +
+                            "      <td>"+jsonData.pageInfo.list[i].status+"</td>\n" +
+                            "    </tr>\n"
+                           )
+                    }
+                    text.push(" </tbody>\n" +
+                        "            </table>");
+                    $('main').html(text.join(" "));
+                }else {
+                    alert("无借阅记录");
+                }
+            },
+            error:function () {
+                alert("error");
+            }
+        })
 
     })
     $('#personalInformation').click(function () {
@@ -289,7 +320,7 @@
             '<p class="mb-1">&copy; 2019-2020 小谭全球粉丝后援会</p>\n' +
             '</footer>')
     })
-    //因为用户名成为标识了，所以修改个人信息不允许修改用户名，只能修改密码 adminController方法还没有改
+    //因为用户名成为标识了，所以修改个人信息不允许修改用户名，只能修改密码
     function settingInformation() {
         var name='<security:authentication property="principal.username"></security:authentication>'
         var changedPassword=$('#Password').val();
