@@ -258,6 +258,7 @@
 
     $('#loanRecord').click(function () {
         alert("借阅记录")
+
     })
     $('#personalInformation').click(function () {
         $('main').html('<div class="container">\n' +

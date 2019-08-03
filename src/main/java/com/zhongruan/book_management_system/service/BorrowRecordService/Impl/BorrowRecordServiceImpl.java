@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service("borrowRecordService")
-public class BorrowRecordServiceImpl implements IBorrowRecordService {
+public class
+BorrowRecordServiceImpl implements IBorrowRecordService {
     @Autowired
     IBorroweRecordDao borroweRecordDao;
     @Override
