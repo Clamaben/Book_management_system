@@ -4,7 +4,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
         if (roles.contains("ROLE_LIBRARIAN")) {
-            response.sendRedirect(basePath + "librarian");
+            response.sendRedirect(basePath + "librarian/mainpage");
             return;
         }
         response.sendRedirect(basePath + "toIndex");
