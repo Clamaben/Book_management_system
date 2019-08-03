@@ -1,12 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
-<<<<<<< Updated upstream
 /.idea
 /target
 .gitignore
 *.yml
-=======
-.gitignore
-.idea/dataSources/
-.idea/workspace.xml
-target/
->>>>>>> Stashed changes
+
