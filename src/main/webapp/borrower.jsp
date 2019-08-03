@@ -71,7 +71,25 @@
             </div>
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </main>
     </div>
 </div>
@@ -82,8 +100,10 @@
 <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
 
+</body>
+</html>
 <script>
-<%--    推荐书籍 调用bookcontroller getallbooks --%>
+    <%--    推荐书籍 调用bookcontroller getallbooks --%>
     $('#recomendBooks').click(function () {
         $.ajax({
             type:'post',
@@ -252,11 +272,14 @@
     }
 
     $('#loanRecord').click(function () {
+        BorroweRecord(1,10);
+    })
+    function BorroweRecord (pageNum,pageSize) {
         var name='<security:authentication property="principal.username"></security:authentication>'
         $.ajax({
             url:'${root}/borrower/getSomeBR',
             type:'post',
-            data:{borrowername:name},
+            data:{pageNum:pageNum,pageSize:pageSize,borrowername:name},
             success:function (jsonData) {
                 if(jsonData.code==0){
                     var text=[];
@@ -274,24 +297,64 @@
                         text.push("    <tr>\n" +
                             "      <th scope=\"row\">"+jsonData.pageInfo.list[i].recordId+"</th>\n" +
                             "      <td>"+jsonData.books[i].name+"</td>\n" +
-                            "      <td>"+jsonData.pageInfo.list[i].borrowTime+"</td>\n" +
-                            "      <td>"+jsonData.pageInfo.list[i].status+"</td>\n" +
-                            "    </tr>\n"
-                           )
+                            "      <td>"+jsonData.pageInfo.list[i].borrowTime+"</td>\n")
+                        if (jsonData.pageInfo.list[i].status == 0) {
+                            text.push("      <td>已归还</td>\n" +
+                                "    </tr>\n")
+                        }else {
+                            text.push("      <td>未归还</td>\n" +
+                                "    </tr>\n")
+                        }
                     }
-                    text.push(" </tbody>\n" +
-                        "            </table>");
-                    $('main').html(text.join(" "));
-                }else {
-                    alert("无借阅记录");
-                }
-            },
-            error:function () {
-                alert("error");
-            }
-        })
+                        text.push(" </tbody>\n" +
+                            "            </table>");
 
-    })
+                    //添加分页的nav
+                    text.push("<nav aria-label=\"Page navigation example\">\n" +
+                    "  <ul class=\"pagination justify-content-center\">");
+                        if(jsonData.pageInfo.hasPreviousPage){
+                            text.push("<li class=\"page-item\">" +
+                                "<a class=\"page-link\" onclick='BorroweRecord("+jsonData.pageInfo.prePage+",10)' aria-label=\"Previous\">" +
+                                "<span aria-hidden=\"true\">&laquo;</span>\n" +
+                                "<span class=\"sr-only\">Previous</span>" +
+                                "</a>" +
+                                "</li>\n");
+                        }
+                        for (var i =0;i<jsonData.pageInfo.pages;i++) {
+                            if (i==jsonData.pageInfo.pageNum-1) {
+                                text.push("<li class=\"page-item\"><a class=\"page-link\"" +
+                                    "onclick='BorroweRecord("+jsonData.pageInfo.navigatepageNums[i]+",10)'" +
+                                    ">"
+                                    +jsonData.pageInfo.navigatepageNums[i]+
+                                    "</a></li>\n");
+                            }else{
+                                text.push("<li class=\"page-item\"><a class=\"page-link\"" +
+                                    " onclick='BorroweRecord("+jsonData.pageInfo.navigatepageNums[i]+",10)'>"
+                                    +jsonData.pageInfo.navigatepageNums[i]+
+                                    "</a></li>\n");
+                            }
+                        }
+                        if(jsonData.pageInfo.hasNextPage){
+                            text.push("<li class=\"page-item\">\n" +
+                                "      <a class=\"page-link\" onclick='BorroweRecord("+jsonData.pageInfo.nextPage+",10)' aria-label=\"Next\">\n" +
+                                "        <span aria-hidden=\"true\">&raquo;</span>\n" +
+                                "        <span class=\"sr-only\">Next</span>\n" +
+                                "      </a>\n" +
+                                "    </li>");
+                        }
+                        text.push("  </ul>\n" +
+                            "</nav>");
+                        $('main').html(text.join(" "));
+                    }else {
+                        alert("无借阅记录");
+                    }
+                },
+                error:function () {
+                    alert("error");
+                }
+            })
+
+    }
     $('#personalInformation').click(function () {
         $('main').html('<div class="container">\n' +
             '<div class="py-5 text-center">\n' +
@@ -338,5 +401,3 @@
     }
 
 </script>
-</body>
-</html>
