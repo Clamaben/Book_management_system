@@ -1,14 +1,11 @@
 package com.zhongruan.book_management_system.controller;
 
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhongruan.book_management_system.entity.Book;
 import com.zhongruan.book_management_system.entity.BorrowRecord;
-import com.zhongruan.book_management_system.entity.User;
 import com.zhongruan.book_management_system.service.Bookservice.IBookService;
 import com.zhongruan.book_management_system.service.BorrowRecordService.IBorrowRecordService;
-import com.zhongruan.book_management_system.service.BorrowRecordService.Impl.BorrowRecordServiceImpl;
 import com.zhongruan.book_management_system.service.Userservice.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,9 +76,9 @@ public class BorrowerController {
         Map<String, Object> map = new HashMap<>();
         Book book = bookService.FindBookByid(bookid);
         if (book != null) {
-            if(book.getOnLoan()<=0){
-                map.put("code",1);
-                map.put("msg","没有书籍借出");
+            if (book.getOnLoan() <= 0) {
+                map.put("code", 1);
+                map.put("msg", "没有书籍借出");
                 return map;
             }
             BorrowRecord borrowRecord = borrowRecordService.FindBorrowRecordByBookidAndBorrowerid(bookid, getidbyname(borrowername));
@@ -121,8 +118,8 @@ public class BorrowerController {
     //所有书籍分页显示
     @RequestMapping("/getSomeBooks")
     @ResponseBody
-    public Map getSomeBooks(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-                            @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) {
+    public Map getSomeBooks(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         Map<String, Object> map = new HashMap<>();
         List<Book> books = bookService.getSomeBooks(pageNum, pageSize);
         PageInfo<Book> pageInfo = new PageInfo<>(books);
@@ -133,8 +130,8 @@ public class BorrowerController {
     //所有个人借阅记录分页显示
     @RequestMapping("/getSomeBR")
     @ResponseBody
-    public Map getSomeBR(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-                         @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
+    public Map getSomeBR(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                          @RequestParam("borrowername") String borrowername
     ) {
         Map<String, Object> map = new HashMap<>();
