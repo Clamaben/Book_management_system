@@ -71,25 +71,9 @@
             </div>
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+
+
+
         </main>
     </div>
 </div>
@@ -102,25 +86,64 @@
 
 </body>
 </html>
+
 <script>
-    <%--    推荐书籍 调用bookcontroller getallbooks --%>
+    <%--    推荐书籍  --%>
     $('#recomendBooks').click(function () {
+        recommendFunction(1,10);
+    })
+    function recommendFunction(pageNum,pageSize) {
         $.ajax({
             type:'post',
-            url:'${root}/getAllBooks',
-            data:{},
+            url:'${root}/borrower/getSomeBooks',
+            data:{pageNum:pageNum,pageSize:pageSize},
             success:function (jsonData) {
                 var text=[];
                 text.push("<div align=\"center\"><h1>推荐书籍</h1></div>\n" +
                     "<div>\n" +
                     "<ul style=\"display: inline\">");
 
-                for (var i=0;i<jsonData.Books.length;i++){
-                    text.push(recommendContent(jsonData.Books[i]));
+                for (var i=0;i<jsonData.pageInfo.list.length;i++){
+                    text.push(recommendContent(jsonData.pageInfo.list[i]));
                 }
 
                 text.push("</ul>\n" +
                     "</div>");
+                //显示分页
+                text.push("<nav aria-label=\"Page navigation example\">\n" +
+                    "  <ul class=\"pagination justify-content-center\">");
+                if(jsonData.pageInfo.hasPreviousPage){
+                    text.push("<li class=\"page-item\">" +
+                        "<a class=\"page-link\" onclick='recommendFunction("+jsonData.pageInfo.prePage+",10)' aria-label=\"Previous\">" +
+                        "<span aria-hidden=\"true\">&laquo;</span>\n" +
+                        "<span class=\"sr-only\">Previous</span>" +
+                        "</a>" +
+                        "</li>\n");
+                }
+                for (var i =0;i<jsonData.pageInfo.pages;i++) {
+                    if (i==jsonData.pageInfo.pageNum-1) {
+                        text.push("<li class=\"page-item\"><a class=\"page-link\"" +
+                            "onclick='recommendFunction("+jsonData.pageInfo.navigatepageNums[i]+",10)'" +
+                            ">"
+                            +jsonData.pageInfo.navigatepageNums[i]+
+                            "</a></li>\n");
+                    }else{
+                        text.push("<li class=\"page-item\"><a class=\"page-link\"" +
+                            " onclick='recommendFunction("+jsonData.pageInfo.navigatepageNums[i]+",10)'>"
+                            +jsonData.pageInfo.navigatepageNums[i]+
+                            "</a></li>\n");
+                    }
+                }
+                if(jsonData.pageInfo.hasNextPage){
+                    text.push("<li class=\"page-item\">\n" +
+                        "      <a class=\"page-link\" onclick='recommendFunction("+jsonData.pageInfo.nextPage+",10)' aria-label=\"Next\">\n" +
+                        "        <span aria-hidden=\"true\">&raquo;</span>\n" +
+                        "        <span class=\"sr-only\">Next</span>\n" +
+                        "      </a>\n" +
+                        "    </li>");
+                }
+                text.push("  </ul>\n" +
+                    "</nav>");
 
                 $('main').html(text.join(" "));
             },
@@ -128,7 +151,7 @@
                 alert('error');
             }
         })
-    })
+    }
     //动态显示图书信息
     function recommendContent(data)  {
         var str='<li style="display: inline-block">\n' +
@@ -180,6 +203,7 @@
                 }
                 text.push("</ul>\n" +
                     "</div>");
+
 
                 $('main').html(text.join(" "));
             },
