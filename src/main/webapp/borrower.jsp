@@ -85,13 +85,14 @@
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
 
 </body>
+<script>
+<%--    界面加载完成第一次默认执行的函数--%>
+    window.onload=function (ev) { recommendFunction(1,10); }
+</script>
 </html>
 
 <script>
     <%--    推荐书籍  --%>
-    $('#recomendBooks').click(function () {
-        recommendFunction(1,10);
-    })
     function recommendFunction(pageNum,pageSize) {
         $.ajax({
             type:'post',
@@ -249,10 +250,6 @@
                     "</table>\n" +
                     "</div>\n" +
                     "</div>\n" +
-                    "\n" +
-                    "<footer class=\"my-5 pt-5 text-muted text-center text-small\">\n" +
-                    "<p class=\"mb-1\">&copy; 2019-2020 小谭全球粉丝后援会</p>\n" +
-                    "</footer>\n" +
                     "</div>");
 
                 $('main').html(text.join(" "));
