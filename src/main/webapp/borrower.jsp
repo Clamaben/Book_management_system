@@ -93,6 +93,9 @@
 
 <script>
     <%--    推荐书籍  --%>
+    $('#recomendBooks').click(function () {
+        recommendFunction(1,10);
+    })
     function recommendFunction(pageNum,pageSize) {
         $.ajax({
             type:'post',
@@ -283,7 +286,8 @@
             success:function (jsonData) {
                 if(jsonData.code==0){
                     alert("还书成功")
-                    this.parents('tr').remove();
+                    $(tag).parents('tr').remove();
+
                 }
             },
             error:function () {
