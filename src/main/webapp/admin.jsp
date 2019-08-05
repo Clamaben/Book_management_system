@@ -13,45 +13,21 @@
     <!-- Custom styles for this template -->
     <link href="menu.css" rel="stylesheet">
 
-    <style type="text/css">
-        table.hovertable {
-            font-family: verdana, arial, sans-serif;
-            font-size: 11px;
-            color: #333333;
-            border-width: 1px;
-            border-color: #999999;
-            border-collapse: collapse;
-        }
 
-        table.hovertable th {
-            background-color: #c3dde0;
-            border-width: 1px;
-            padding: 8px;
-            border-style: solid;
-            border-color: #a9c6c9;
-        }
-
-        table.hovertable tr {
-            background-color: #d4e3e5;
-        }
-
-        table.hovertable td {
-            border-width: 1px;
-            padding: 8px;
-            border-style: solid;
-            border-color: #a9c6c9;
-        }
-    </style>
 </head>
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">菜单</a>
-    <input id="search" class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"
-           style="background-color:lightgray">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">图书管理</a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" style="background-color:rgba(128,128,128,0.75)" id="search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">注销</a>
+            <a class="nav-link" href="#" id="queryBooks">查询</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="${root}/toLogin" >登出</a>
         </li>
     </ul>
 </nav>
@@ -164,7 +140,7 @@
             success: function (jsonData) {
                 if (jsonData.code == 0) {
                     alert("添加成功")
-                    showAllUser();
+                    showAllUser(1);
                 }
             },
             error: function () {
@@ -221,33 +197,60 @@
             success: function (jsonData) {
                 console.log(jsonData);
                 var text = [];
-                text.push("<div align=\"center\"><h1>所有成员</h1></div>\n" +
-                    "<div  align=\"center\">\n" +
-                    "<ul style=\"display: inline\">");
-                text.push('<table id="users"  class=\"hovertable\">' +
-                    '<tr onmouseover=\"this.style.backgroundColor=\'#ffff66\';\" onmouseout=\"this.style.backgroundColor=\'#d4e3e5\';\">' +
-
-                    '<td> id</td>' +
-                    '<td> username</td>' +
-                    '<td> password</td>' +
-                    '<td> role</td>' +
-
-                    '<td> </td>' +
-                    '<td> </td>' +
-
-                    '<tr>'
-                );
+                text.push(
+                    "<div  align=\"center\">\n"
+                  );
+                text.push(" <table class=\"table table-hover\">\n" +
+                    "                <thead>\n" +
+                    "                <tr>\n" +
+                    "                    <th scope=\"col\">Id</th>\n" +
+                    "                    <th scope=\"col\">username</th>\n" +
+                    "                    <th scope=\"col\">password</th>\n" +
+                    "                    <th scope=\"col\">role</th>\n" +
+                    "                    <th scope=\"col\"></th>\n" +
+                    "                    <th scope=\"col\"></th>\n" +
+                    "                </tr>\n" +
+                    "                </thead>\n" +
+                    "                <tbody>");
                 for (var i = 0; i < jsonData.pageInfo.list.length; i++) {
                     text.push(userContent(jsonData.pageInfo.list[i], i + 1));
                 }
-                text.push('<table>');
-                text.push("</ul>\n" +
+                text.push(" </tbody>\n" +
+                    "            </table>");
+                text.push(
                     "</div>");
-
-                // if (jsonData.pageInfo.hasPreviousPage) {
-                    text.push('<div align=\"center\">' +
-                        '<b>当前第'+jsonData.pageInfo.pageNum+'页,共'+jsonData.pageInfo.pages+'页</b>' +
-                        '<button value=' + (jsonData.pageInfo.pageNum) +'_'+jsonData.pageInfo.pages +' class="btn btn-secondary" onclick="jumpPrevPage(this)">上一页</button><button value=' + jsonData.pageInfo.nextPage + ' class="btn btn-secondary" onclick="jumpPage(this)">下一页</button></div> ');
+                //添加分页的nav
+                text.push("<nav aria-label=\"Page navigation example\">\n" +
+                    "  <ul class=\"pagination justify-content-center\">");
+                if(jsonData.pageInfo.hasPreviousPage){
+                    text.push("<li class=\"page-item\">" +
+                        "<a class=\"page-link\" onclick='BorroweRecord("+jsonData.pageInfo.prePage+",10)' aria-label=\"Previous\">" +
+                        "<span aria-hidden=\"true\">&laquo;</span>\n" +
+                        "<span class=\"sr-only\">Previous</span>" +
+                        "</a>" +
+                        "</li>\n");
+                }
+                for (var i =0;i<jsonData.pageInfo.pages;i++) {
+                    if (i==jsonData.pageInfo.pageNum-1) {
+                        text.push("<li class=\"page-item\"><a class=\"page-link\"" +
+                            "onclick='showAllUser("+jsonData.pageInfo.navigatepageNums[i]+")'" +
+                            ">"
+                            +jsonData.pageInfo.navigatepageNums[i]+
+                            "</a></li>\n");
+                    }else{
+                        text.push("<li class=\"page-item\"><a class=\"page-link\"" +
+                            " onclick='showAllUser("+jsonData.pageInfo.navigatepageNums[i]+")'>"
+                            +jsonData.pageInfo.navigatepageNums[i]+
+                            "</a></li>\n");
+                    }
+                }
+                if(jsonData.pageInfo.hasNextPage){
+                    text.push("<li class=\"page-item\">\n" +
+                        "      <a class=\"page-link\" onclick='showAllUser("+jsonData.pageInfo.nextPage+")' aria-label=\"Next\">\n" +
+                        "        <span aria-hidden=\"true\">&raquo;</span>\n" +
+                        "        <span class=\"sr-only\">Next</span>\n" +
+                        "      </a>\n" +
+                        "    </li>");}
 
                 // }
                 // if (jsonData.pageInfo.hasNextPage) {
@@ -300,17 +303,15 @@
 
     function userContent(data, i) {
 
-        var str = '        <tr onmouseover=\"this.style.backgroundColor=\'#ffff66\';\" onmouseout=\"this.style.backgroundColor=\'#d4e3e5\';\">  ' +
+        var str = '<tr> ' +
 
-            '<td width="200">' + data.id + '</td>' +
-            '<td width="200">' + data.username + '</td>' +
-            '<td width="200">' + data.password + '</td>' +
-            '<td width="200">' + data.role + '</td>' +
+            '<th scope=\"row\">' + data.id + '</th>' +
+            '<td >' + data.username + '</td>' +
+            '<td >' + data.password + '</td>' +
+            '<td >' + data.role + '</td>' +
 
             '<td ><button value=' + data.id + "_" + i + ' class="btn btn-secondary" onclick="deleteUserById(this)">删除</button></td>\n' +
             '<td  ><button value=' + data.id + "_" + data.username + "_" + data.password + "_" + data.role + "_" + ' class="btn btn-secondary" onclick="updateUserById(this)">修改</button></td>\n' +
-
-
             '   </tr>        '
         return str;
     }
