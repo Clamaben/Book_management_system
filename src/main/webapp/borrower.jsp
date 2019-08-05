@@ -20,7 +20,7 @@
     <input id="search" class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" style="background-color:lightgray">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">注销</a>
+            <a class="nav-link" href="${root}/toLogin">注销</a>
         </li>
     </ul>
 </nav>
@@ -161,7 +161,7 @@
         var str='<li style="display: inline-block">\n' +
             '<div style="margin: 30px">\n' +
             '<div class="cover shadow-cover">\n' +
-            '<img src="${root}/static/bookpic/1.jpg" width="70%"height="70%"></img>\n' +
+            '<img src="${root}/static/'+data.img_url+' " width="70%"height="70%"></img>\n' +
             '</div>\n' +
             '<div class="info">\n' +
             '<h4 class="title">'+data.name+'</h4>\n' +
@@ -398,7 +398,7 @@
             '<input type="text" id="Password">\n' +
             '</div>\n' +
             '</div>\n' +
-            '<div style="margin: 30px" align="center"><button class="btn btn-primary btn-lg btn-block col-md-2" type="button" id="settiingButton">提交</button></div>\n' +
+            '<div style="margin: 30px" align="center"><button class="btn btn-primary btn-lg btn-block col-md-2" type="button" id="settiingButton" onclick="settingInformation()">提交</button></div>\n' +
             ' </form>\n' +
             '</div>\n' +
             '</div>\n' +
@@ -412,8 +412,8 @@
         var changedPassword=$('#Password').val();
         $.ajax({
             type:'post',
-            url:'${root}/AdminController/updateByName',
-            data:{name:name,password:changedPassword},
+            url:'${root}/self/updateByName',
+            data:{username:name,password:changedPassword},
             success:function (jsonData) {
                 alert('修改成功')
             },

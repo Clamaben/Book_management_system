@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -85,27 +86,7 @@ public class AdminController {
             return map;
         }
     }
-
-    @RequestMapping("updateById")
-    @ResponseBody
-    public Map updateById(User user)
-    {
-        System.out.println(user);
-        int flag=userService.updateById(user);
-        Map<String,Object> map=new HashMap<>();
-        if(flag==1)
-        {
-            map.put("msg","更新成功");
-            map.put("code",0);
-            return map;
-        }else
-        {
-            map.put("msg","更新失败");
-            map.put("code",1);
-            return map;
-        }
-    }
-
+    
     @RequestMapping("queryById")
     @ResponseBody
     public Map queryById(User user)
