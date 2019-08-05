@@ -11,8 +11,10 @@
                 `username`=#{username},
             </if>
             <if test="password!=null and password!=''">
-                `password`=#{password}
+                `password`=#{password},
             </if>
+            `role`=#{role}
+
         </set>
         where id=#{id} ;
     </update>

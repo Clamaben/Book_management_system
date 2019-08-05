@@ -10,7 +10,7 @@ import java.util.List;
 public interface IUserService extends UserDetailsService {
     User getUserByid(User user);
 
-    List<User> getAllUsers();
+    List<User> getAllUsers(int pageNum, int pageSize);
 
     int add(User user);
 

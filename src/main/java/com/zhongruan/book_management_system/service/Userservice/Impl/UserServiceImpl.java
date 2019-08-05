@@ -1,5 +1,6 @@
 package com.zhongruan.book_management_system.service.Userservice.Impl;
 
+import com.github.pagehelper.PageHelper;
 import com.zhongruan.book_management_system.dao.IUserDao;
 import com.zhongruan.book_management_system.entity.User;
 import com.zhongruan.book_management_system.service.Userservice.IUserService;
@@ -23,7 +24,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         return userDao.getAllUsers();
     }
 

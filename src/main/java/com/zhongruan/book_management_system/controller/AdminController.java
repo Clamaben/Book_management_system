@@ -1,6 +1,7 @@
 package com.zhongruan.book_management_system.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.zhongruan.book_management_system.entity.User;
 import com.zhongruan.book_management_system.service.Userservice.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,20 @@ public class AdminController {
     }
     @RequestMapping("getAllUser")
     @ResponseBody
-    public Map getAllUser () {
-        List<User> users = userService.getAllUsers();
+    public Map getAllUser (@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        List<User> users = userService.getAllUsers(pageNum, pageSize);
         Map<String,Object> map=new HashMap<>();
-        map.put("list", users);
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        map.put("pageInfo", pageInfo);
         return map;
+        /**
+         *         Map<String, Object> map = new HashMap<>();
+         *         List<Book> books = bookService.getSomeBooks(pageNum, pageSize);
+         *         PageInfo<Book> pageInfo = new PageInfo<>(books);
+         *         map.put("pageInfo", pageInfo);
+         *         return map;
+         */
     }
 
     @RequestMapping("add")
