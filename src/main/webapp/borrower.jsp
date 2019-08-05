@@ -324,10 +324,10 @@
                             "      <td>"+jsonData.books[i].name+"</td>\n" +
                             "      <td>"+jsonData.pageInfo.list[i].borrowTime+"</td>\n")
                         if (jsonData.pageInfo.list[i].status == 0) {
-                            text.push("      <td>已归还</td>\n" +
+                            text.push("      <td><img src=\"${root}/static/images/backbook_red.png\" style=\" width: 30px;height: 30px;\"></img></td>\n" +
                                 "    </tr>\n")
                         }else {
-                            text.push("      <td>未归还</td>\n" +
+                            text.push("      <td><img src=\"${root}/static/images/backbook_green.png\"  style=\" width: 30px;height: 30px;\"></img></td>\n" +
                                 "    </tr>\n")
                         }
                     }
