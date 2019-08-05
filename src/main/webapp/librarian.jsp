@@ -145,7 +145,7 @@
             '<input type="text" id="Password">\n' +
             '</div>\n' +
             '</div>\n' +
-            '<div style="margin: 30px" align="center"><button class="btn btn-primary btn-lg btn-block col-md-2" type="button" id="settiingButton">提交</button></div>\n' +
+            '<div style="margin: 30px" align="center"><button class="btn btn-primary btn-lg btn-block col-md-2" type="button" id="settiingButton" onclick="settingInformation()">提交</button></div>\n' +
             ' </form>\n' +
             '</div>\n' +
             '</div>\n' +
@@ -159,8 +159,8 @@
         var changedPassword=$('#Password').val();
         $.ajax({
             type:'post',
-            url:'${root}/AdminController/updateByName',
-            data:{name:name,password:changedPassword},
+            url:'${root}/self/updateByName',
+            data:{username:name,password:changedPassword},
             success:function (jsonData) {
                 alert('修改成功')
             },
