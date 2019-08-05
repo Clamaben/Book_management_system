@@ -383,18 +383,18 @@ function edit(id) {
     }
     
     function addBook() {
-        var name = $('bookName').val();
-        var ISBN = $('ISBN').val();
-        var type = $('bookType').val();
-        var description = $('description').val();
-        var stock = $('stock').val();
-        var img_url = $('input_file').val();
+        var name = $('#bookName').val();
+        var ISBN = $('#ISBN').val();
+        var type = $('#bookType').val();
+        var description = $('#description').val();
+        var stock = $('#stock').val();
+        var img_url = $('#input_file').val();
         $.ajax({
             type: 'post',
             url: '${root}/librarian/addBook',
             data: {
                 name:name,
-                isbn:ISBN,
+                ISBN:ISBN,
                 type:type,
                 description:description,
                 stock:stock,
@@ -422,18 +422,18 @@ function edit(id) {
 <script>
     function updateBook()
     {
-        var name = $('bookName').val();
-        var ISBN = $('ISBN').val();
-        var type = $('bookType').val();
-        var description = $('description').val();
-        var stock = $('stock').val();
-        var img_url = $('input_file').val();
+        var name = $('#bookName').val();
+        var ISBN = $('#ISBN').val();
+        var type = $('#bookType').val();
+        var description = $('#description').val();
+        var stock = $('#stock').val();
+        var img_url = $('#input_file').val();
         $.ajax({
             type: 'post',
             url: '${root}/librarian/updateBook',
             data: {
                 name:name,
-                isbn:ISBN,
+                ISBN:ISBN,
                 type:type,
                 description:description,
                 stock:stock,
