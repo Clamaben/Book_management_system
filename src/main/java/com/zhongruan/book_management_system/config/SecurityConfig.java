@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()//注销配置
                 .logoutUrl("/logout")//注销页面地址
-                .logoutSuccessUrl("/user/logout")//注销成功后的跳转页面
+                .logoutSuccessUrl("/toLogin")//注销成功后的跳转页面
                 .deleteCookies("myCookie")//删除cookie
                 .and()
                 .csrf()

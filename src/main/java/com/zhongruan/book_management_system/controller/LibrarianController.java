@@ -42,7 +42,7 @@ public class LibrarianController {
         return map;
     }
 
-    //通过id删除一本书,map中的code值集含义：0=书籍不存在；1=删除成功；2=删除失败
+    //通过id删除一本书,map中的code值集含义：0=删除成功；1=书籍不存在；2=删除失败
     @RequestMapping(value = "deleteBookById", method = RequestMethod.POST)
     @ResponseBody
     public Map DeleteBookByid(@RequestParam("id") int id) {
@@ -50,17 +50,17 @@ public class LibrarianController {
         Book book = bookService.FindBookByid(id);
         if (book.getName() != null) {
             if (bookService.DeleteBookByid(id)) {
-                map.put("code", 1);
+                map.put("code", 0);
                 return map;
             }
             map.put("code", 2);
             return map;
         }
-        map.put("code", 0);
+        map.put("code", 1);
         return map;
     }
 
-    //修改一本书,map中的code值集含义：0=书籍不存在；1=修改成功；2=修改失败
+    //修改一本书,map中的code值集含义：0=修改成功；1=书籍不存在；2=修改失败
     @RequestMapping(value = "updateBook", method = RequestMethod.POST)
     @ResponseBody
     public Map UpdataBook(Book book) {
@@ -68,13 +68,13 @@ public class LibrarianController {
         Book dbBook = bookService.FindBookByid(book.getId());
         if (dbBook.getName() != null) {
             if (bookService.UpdataBook(book)) {
-                map.put("code", 1);
+                map.put("code", 0);
                 return map;
             }
             map.put("code", 2);
             return map;
         }
-        map.put("code", 0);
+        map.put("code", 1);
         return map;
     }
 

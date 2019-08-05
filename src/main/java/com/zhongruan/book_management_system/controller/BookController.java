@@ -2,7 +2,6 @@ package com.zhongruan.book_management_system.controller;
 
 import com.zhongruan.book_management_system.entity.Book;
 import com.zhongruan.book_management_system.service.Bookservice.IBookService;
-import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -55,7 +54,7 @@ public class BookController {
         return map;
     }
     //通过书名模糊查询返回书籍列表
-    @RequestMapping("getBooksByname")
+    @RequestMapping(value="getBooksByname",method = RequestMethod.POST)
     @ResponseBody
     public Map getBooksByname (@RequestParam("name") String name) {
         Map<String, Object> map = new HashMap<>();
@@ -71,13 +70,13 @@ public class BookController {
         return map;
     }
 
-    @RequestMapping("toBookManage")
-    public String toBookManage (Model model) {
-
-        List<Book> bookList =bookService.getAllBooks();
-        model.addAttribute("bookList",bookList);
-
-        return "book_manage";
-    }
+//    @RequestMapping("toBookManage")
+//    public String toBookManage (Model model) {
+//
+//        List<Book> bookList =bookService.getAllBooks();
+//        model.addAttribute("bookList",bookList);
+//
+//        return "librarian";
+//    }
 
 }
