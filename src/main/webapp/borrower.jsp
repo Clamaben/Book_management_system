@@ -158,14 +158,19 @@
     }
     //动态显示图书信息
     function recommendContent(data)  {
+        var name=data.name;
+        if(data.name.length>6)
+        {
+            name=data.name.substring(0,6)+'...'
+        }
         var str='<li style="display: inline-block">\n' +
             '<div style="margin: 30px">\n' +
-            '<div class="cover shadow-cover">\n' +
-            '<img src="${root}/static/'+data.img_url+' " width="70%"height="70%"></img>\n' +
+            '<div class="cover shadow-cover" >\n' +
+            '<img src="${root}/static/'+data.img_url+'"height="200px""width="140px"></img>\n' +
             '</div>\n' +
             '<div class="info">\n' +
-            '<h4 class="title">'+data.name+'</h4>\n' +
-            '<h6 class="author">'+data.isbn+'</h6>\n' +
+            '<h4 class="title">'+name+'</h4>\n' +
+            '<h6 class="author">'+data.author+'</h6>\n' +
             '</div>\n' +
             '<button type="button" value='+data.id+' class="btn btn-primary" onclick="borrowBook(this)">借书</button>\n' +
             '</div>\n' +
