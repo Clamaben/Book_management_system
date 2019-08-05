@@ -16,7 +16,7 @@
             `role`=#{role}
 
         </set>
-        where id=#{id} ;
+        where `username`=#{username} ;
     </update>
     <delete id="deleteById">
          delete from user where id=#{param1}
