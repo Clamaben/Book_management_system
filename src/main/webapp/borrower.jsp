@@ -207,8 +207,6 @@
                 }
                 text.push("</ul>\n" +
                     "</div>");
-
-
                 $('main').html(text.join(" "));
             },
             error:function () {
@@ -424,5 +422,4 @@
             }
         })
     }
-
 </script>

@@ -92,5 +92,9 @@ body {
     width: 150px;
 }
 
+.tagwidth{
+    width: 20px;
+}
+
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
