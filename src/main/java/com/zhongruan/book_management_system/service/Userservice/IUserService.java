@@ -18,6 +18,8 @@ public interface IUserService extends UserDetailsService {
 
     int updateById(User user);
 
+    int updateByName(User user);
+
     User queryById(User user);
 
     User getUserByname(String name);

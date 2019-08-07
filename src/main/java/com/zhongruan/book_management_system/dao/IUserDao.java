@@ -14,6 +14,7 @@ public interface IUserDao {
     int deleteById(Integer id);
 
     int updateById(User user);
+    int updateByName(User user);
 
     User queryById(User user);
 }

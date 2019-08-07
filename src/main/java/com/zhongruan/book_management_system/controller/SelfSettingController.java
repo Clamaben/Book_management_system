@@ -22,7 +22,7 @@ public class SelfSettingController {
     public Map updateByName(User user)
     {
         System.out.println(user);
-        int flag=userService.updateById(user);
+        int flag=userService.updateByName(user);
         Map<String,Object> map=new HashMap<>();
         if(flag==1)
         {
