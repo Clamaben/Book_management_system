@@ -39,6 +39,9 @@ public class UserServiceImpl implements IUserService {
     public int updateById(User user) { return userDao.updateById(user); }
 
     @Override
+    public int updateByName(User user) { return userDao.updateById(user); }
+
+    @Override
     public User queryById(User user) { return userDao.queryById(user); }
 
     @Override

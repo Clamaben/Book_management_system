@@ -183,6 +183,7 @@
 
 
     function showAllUser(pageNum) {
+
         $.ajax({
             type: 'post',
             url: '${root}/admin/getAllUser?pageNum=' + pageNum + "&pageSize=10",
@@ -388,7 +389,7 @@
             success: function (jsonData) {
                 if (jsonData.code == 0) {
                     alert("修改成功")
-                    showAllUser();
+                    showAllUser(1);
                 }
             },
             error: function () {

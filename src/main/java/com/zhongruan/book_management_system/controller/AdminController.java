@@ -45,6 +45,27 @@ public class AdminController {
         map.put("code",0);
         return map;
     }
+    @RequestMapping(value="updateById",method = RequestMethod.POST)
+    @ResponseBody
+    public Map updateById(User user)
+    {
+        System.out.println(user);
+        int flag=userService.updateById(user);
+        Map<String,Object> map=new HashMap<>();
+        if(flag==1)
+        {
+            map.put("msg","更新成功");
+            map.put("code",0);
+            return map;
+        }else
+        {
+            map.put("msg","更新失败");
+            map.put("code",1);
+            return map;
+        }
+    }
+
+
     @RequestMapping("getAllUser")
     @ResponseBody
     public Map getAllUser (@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
