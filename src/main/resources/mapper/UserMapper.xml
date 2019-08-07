@@ -4,9 +4,6 @@
     <insert id="add">
         insert into user (username,password,role) values (#{username},#{password},#{role});
     </insert>
-
-
-
     <update id="updateById">
         update user
         <set>
@@ -16,20 +13,9 @@
             <if test="password!=null and password!=''">
                 `password`=#{password},
             </if>
-        </set>
-        where `id`=#{id} ;
-    </update>
-    <update id="updateByName">
-        update user
-        <set>
-            <if test="username!=null and username!=''">
-                `username`=#{username},
-            </if>
             <if test="password!=null and password!=''">
-                `password`=#{password},
+                `role`=#{role},
             </if>
-            `role`=#{role}
-
         </set>
         where `username`=#{username} ;
     </update>

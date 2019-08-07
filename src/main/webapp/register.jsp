@@ -107,11 +107,11 @@ function finishRegister() {
             if(jsonData.code==2){
                 alert("注册失败，用户名重复")
             }
-            if (jsonData.code==1)
+            if (jsonData.code==0)
             {
                 alert("注册成功")
             }
-            if(jsonData.code==0)
+            if(jsonData.code==1)
             {
                 alert("失败")
             }

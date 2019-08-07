@@ -1,13 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix='security' uri='http://www.springframework.org/security/tags'%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <!doctype html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
     <meta name="author" content="">
     <title>图书管理员界面</title>
     <!-- Custom styles for this template -->
@@ -65,6 +65,7 @@
                     <thead>
                     <tr>
                         <th class="samewidth">书名</th>
+                        <th class="samewidth">作者</th>
                         <th class="samewidth">ISBN编码</th>
                         <th class="samewidth">类型</th>
                         <th class="samewidth">描述</th>
@@ -106,6 +107,7 @@
                     "                    <thead>\n" +
                     "                    <tr>\n" +
                     "                        <th class=\"samewidth\">书名</th>\n" +
+                    "                        <th class=\"samewidth\">作者</th>"+
                     "                        <th class=\"samewidth\">ISBN编码</th>\n" +
                     "                        <th class=\"samewidth\">类型</th>\n" +
                     "                        <th class=\"samewidth\">描述</th>\n" +
@@ -162,7 +164,7 @@
             url:'${root}/self/updateByName',
             data:{username:name,password:changedPassword},
             success:function (jsonData) {
-                alert('修改成功')
+                alert(jsonData.msg);
             },
             error:function () {
                 alert('error');
@@ -198,6 +200,7 @@ function bookList(dataArray) {
         var id = item.id;
         var tr;
         tr += "<td class=\"samewidth\">" + item.name + "</td>";
+        tr += "<td class=\"samewidth\">" + item.author + "</td>";
         tr += "<td class=\"samewidth\">" + item.isbn + "</td>";
         tr += "<td class=\"samewidth\">" + item.type + "</td>";
         tr += "<td class=\"samewidth\">" + item.description.substring(0, 10) + "</td>";
@@ -217,17 +220,22 @@ function edit(id) {
         success: function (json) {
             var str =  "<div class=\"container\">\n" +
                 "    <div class=\"py-5 text-center\">\n" +
-                "        <img class=\"d-block mx-auto mb-4\" src=\"https://getbootstrap.com/assets/brand/bootstrap-solid.svg\" alt=\"\" width=\"72\" height=\"72\">\n" +
                 "        <h2>图书信息编辑</h2>\n" +
                 "    </div>\n" +
                 "    <div class=\"container\">\n" +
                 "        <div class=\"col-md-12 mb-3\">\n" +
                 "            <h4 class=\"mb-3\">图书信息</h4>\n" +
-                "            <form class=\"needs-validation\" novalidate>\n" +
+                // "            <form class=\"needs-validation\" novalidate>\n" +
                 "                <div class=\"row\">\n" +
                 "                    <div class=\"col-md-6 mb-3\">\n" +
                 "                        <label for=\"bookName\">书名</label>\n" +
                 "                        <input type=\"text\" class=\"form-control\" value=\""+json.Book.name+"\" id=\"bookName\" required>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"row\">\n" +
+                "                    <div class=\"col-md-6 mb-3\">\n" +
+                "                        <label for=\"author\">作者</label>\n" +
+                "                        <input type=\"text\" class=\"form-control\" value=\""+json.Book.author+"\" id=\"author\" required>\n" +
                 "                    </div>\n" +
                 "                </div>\n" +
                 "                <div class=\"mb-3\">\n" +
@@ -254,11 +262,11 @@ function edit(id) {
                 "                    <label for=\"address\">上传新图片</label>\n" +
                 "    <img id=\"preview\" />\n" +
                 "    <input type=\"file\" name=\"file\" id = \"input_file\" accept=\"image/*\" value=\""+json.Book.img_url+"\"><br>\n" +
-                "    <button onclick=\"upload()\">上传</button>\n" +
+                "<button onclick=\"upload()\" type='button'>上传</button>"+
                 "</div>"+
                 "                <hr class=\"mb-4\">\n" +
                 "                <button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" onclick=\"updateBook()\">提交修改</button>\n" +
-                "            </form>\n" +
+                // "            </form>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "\n" +
@@ -283,13 +291,18 @@ function edit(id) {
             //data
             data:{id:id},
             success:function (jsonData) {
-                if(jsonData.code ==1)
+                console.log(jsonData);
+                if(jsonData.code ==0)
                 {
                     $(tag).parents('tr').remove();
                 }
                 if(jsonData.code ==2)
                 {
                     alert("书籍不存在");
+                }
+                if(jsonData.code == 1)
+                {
+                    alert("删除失败");
                 }
             },
             error:function () {
@@ -303,7 +316,6 @@ function edit(id) {
     function add() {
         $('main').html("<div class=\"container\">\n" +
             "    <div class=\"py-5 text-center\">\n" +
-            "        <img class=\"d-block mx-auto mb-4\" src=\"https://getbootstrap.com/assets/brand/bootstrap-solid.svg\" alt=\"\" width=\"72\" height=\"72\">\n" +
             "        <h2>图书信息添加</h2>\n" +
             "    </div>\n" +
             "    <div class=\"container\">\n" +
@@ -314,6 +326,12 @@ function edit(id) {
             "                    <div class=\"col-md-6 mb-3\">\n" +
             "                        <label for=\"bookName\">书名</label>\n" +
             "                        <input type=\"text\" class=\"form-control\" id=\"bookName\" required>\n" +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "                <div class=\"row\">\n" +
+            "                    <div class=\"col-md-6 mb-3\">\n" +
+            "                        <label for=\"author\">作者</label>\n" +
+            "                        <input type=\"text\" class=\"form-control\" id=\"author\" required>\n" +
             "                    </div>\n" +
             "                </div>\n" +
             "                <div class=\"mb-3\">\n" +
@@ -340,10 +358,10 @@ function edit(id) {
             "                    <label for=\"address\">上传图片</label>\n" +
             "    <img id=\"preview\" />\n" +
             "    <input type=\"file\" name=\"file\" id = \"input_file\" accept=\"image/*\" ><br>\n" +
-            "    <button onclick=\"upload()\">上传</button>\n" +
+            "<button onclick=\"upload()\" type='button'>提交</button>"+
             "</div>"+
-            "                <hr class=\"mb-4\">\n" +
-            "                <button class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" onclick=\"addBook()\">提交</button>\n" +
+            "                <hr class=\"mb-3\">\n" +
+            "                <button width=100px  class=\"btn btn-primary btn-lg btn-block\" type=\"submit\" onclick=\"addBook()\">提交</button>\n" +
             "            </form>\n" +
             "        </div>\n" +
             "    </div>\n" +
@@ -361,6 +379,7 @@ function edit(id) {
         formData.append('file', $('#input_file')[0].files[0]);  //添加图片信息的参数
         $.ajax({
             url: '${root}/librarian/upload',
+            async: false,
             type: 'POST',
             cache: false, //上传文件不需要缓存
             data: formData,
@@ -374,6 +393,7 @@ function edit(id) {
                 //这个是图片地址，访问图片还要在图片地址前面加上  ${root}/images
                 //这个在新增书籍的时候也传到服务器上
                 console.log(data.img_url);
+                alert(data.msg);
                 $('input_file').val(data.img_url)
             },
             error: function () {
@@ -384,6 +404,7 @@ function edit(id) {
     
     function addBook() {
         var name = $('#bookName').val();
+        var author = $('#author').val();
         var ISBN = $('#ISBN').val();
         var type = $('#bookType').val();
         var description = $('#description').val();
@@ -394,6 +415,7 @@ function edit(id) {
             url: '${root}/librarian/addBook',
             data: {
                 name:name,
+                author:author,
                 ISBN:ISBN,
                 type:type,
                 description:description,
@@ -423,6 +445,7 @@ function edit(id) {
     function updateBook()
     {
         var name = $('#bookName').val();
+        var author = $('#author').val();
         var ISBN = $('#ISBN').val();
         var type = $('#bookType').val();
         var description = $('#description').val();
@@ -433,6 +456,7 @@ function edit(id) {
             url: '${root}/librarian/updateBook',
             data: {
                 name:name,
+                author:author,
                 ISBN:ISBN,
                 type:type,
                 description:description,
@@ -479,6 +503,7 @@ function edit(id) {
                     "                    <thead>\n" +
                     "                    <tr>\n" +
                     "                        <th class=\"samewidth\">书名</th>\n" +
+                    "                        <th class=\"samewidth\">作者</th>\n" +
                     "                        <th class=\"samewidth\">ISBN编码</th>\n" +
                     "                        <th class=\"samewidth\">类型</th>\n" +
                     "                        <th class=\"samewidth\">描述</th>\n" +

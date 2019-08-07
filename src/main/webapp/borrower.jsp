@@ -420,7 +420,7 @@
             url:'${root}/self/updateByName',
             data:{username:name,password:changedPassword},
             success:function (jsonData) {
-                alert('修改成功')
+                alert(jsonData.msg);
             },
             error:function () {
                 alert('error');
